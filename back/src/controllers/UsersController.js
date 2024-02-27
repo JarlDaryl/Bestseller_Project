@@ -1,4 +1,4 @@
-const usersDB = require("./UsersDB")
+const usersDB = require("../mocks/UsersDB")
 const userModel = require("../models/UsersModel")
 
 const getUsers = async (req, res) => {
