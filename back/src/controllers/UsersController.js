@@ -45,7 +45,31 @@ const getUserById = async (req, res) => {
     }
 }
 
-module.exports = { 
-    getUsers, 
+const loadData = async (req, res) => {
+    try {
+        usersDB.map(async (user) => {
+            const newUser = userModel({
+                email: user.email,
+                password: user.password,
+                companyName: user.companyName,
+                country: user.country,
+            })
+            await newUser.save()
+        })
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+        if (error.code === 11000) {
+            return res
+                .status(409)
+                .json({ status: "failed", data: null, error: "The email already exist" });
+        }
+    }
+}
+
+
+module.exports = {
+    getUsers,
     getUserById,
+    loadData,
 }
