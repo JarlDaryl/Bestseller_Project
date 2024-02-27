@@ -5,12 +5,17 @@ const userSchema = new Schema({
 
     email: {
         type: String,
-        required: true,
+        required: [true, "email is mandatory"],
+        match: [/^\S+@\S+\.\S+$/, "incorrect email format"],
         unique: true,
+        trim: true,
+        minLength: 6,
     },
     password: {
         type: String,
-        required: true
+        required: [true, "password is mandatory"],
+        trim: true,
+        minLength: 10,
     },
     companyName: {
         type: String,

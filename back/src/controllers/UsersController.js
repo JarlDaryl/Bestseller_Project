@@ -47,7 +47,8 @@ const getUserById = async (req, res) => {
 
 const loadData = async (req, res) => {
     try {
-        usersDB.map(async (user) => {
+
+        await Promise.all(usersDB.map(async (user) => {
             const newUser = userModel({
                 email: user.email,
                 password: user.password,
@@ -55,15 +56,20 @@ const loadData = async (req, res) => {
                 country: user.country,
             })
             await newUser.save()
-        })
-        res.sendStatus(200)
+        }));
+        res.send("Data loaded successfully")
     } catch (error) {
         console.log(error)
         if (error.code === 11000) {
             return res
                 .status(409)
-                .json({ status: "failed", data: null, error: "The email already exist" });
+                .json({ status: "failed", data: null, error: "The email already exists" });
         }
+        res.status(500).json({
+            status: "error",
+            data: null,
+            error: "Internal server error",
+        });
     }
 }
 
