@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
 const userRouter = require('./routes/UsersRoute');
+const loginRouter = require('./routes/LoginRoute');
 const app = express();
 const port = 9000;
 
@@ -27,6 +28,7 @@ db.on("disconnected", () => {
 });
 
 app.use('/users', userRouter);
+app.use('/login', loginRouter)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

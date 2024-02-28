@@ -1,16 +1,18 @@
-const userModel = require("../models/UserModel");
+const userModel = require("../models/UsersModel");
 const bcrypt = require("bcrypt");
 
 //Create user with an encrypted password
 const signup = async (req, res) => {
     try {
+        
+       
         const user = new userModel({
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),
             companyName: req.body.companyName,
             country: req.body.country,
         });
-
+        
         await user.save();
 
         res.status(200).json({ status: "succeeded", user, error: null });
