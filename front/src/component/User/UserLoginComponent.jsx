@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, setErrorMessage } from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -6,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Link from 'next/link';
+import { loginUser } from '../../api/UsersAPIFetch';
 
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -15,6 +17,29 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function UserLoginComponent() {
+
+	const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+	const emailHandler = (e) => {
+        setEmail(e.target.value)
+    }
+    const passwordHandler = (e) => {
+        setPassword(e.target.value)
+    }
+
+	const loginHandler = async (e) => {
+		e.preventDefault()
+		try {
+            const user = await loginUser(email, password);
+            console.log(user);
+        } catch (error) {
+            console.error("Invalid email or password. Please try again.");
+            console.error("Error logging in:", error);
+        }
+	}
+
+
 	return (
 		<Box sx={{ flexGrow: 5 }}>
 			<Grid container spacing={2}>
@@ -24,13 +49,13 @@ export default function UserLoginComponent() {
 					
 						<div>
 							<label>Email</label>
-							<input type='email' name='email' />
+							<input type='email' name='email' value={email} onChange={emailHandler}/>
 						</div>
 						<div>
 							<label>Password</label>
-							<input type='password' name='password' />
+							<input type='password' name='password' value={password} onChange={passwordHandler}/>
 						</div>
-						<Button type='submit' variant='contained'>
+						<Button type='submit' variant='contained' onClick={loginHandler}>
 							Log In
 						</Button>
 					
