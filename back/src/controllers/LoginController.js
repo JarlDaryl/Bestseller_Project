@@ -13,17 +13,20 @@ const signup = async (req, res) => {
             country: req.body.country,
         });
         
-        await user.save();
+        try {
+            await user.save();
+        } catch (saveError) {
 
-        res.status(200).json({ status: "succeeded", user, error: null });
-    } catch (error) {
-        console.log(error)
-
-        if (error.code === 11000) {
+             if (saveError.code === 11000) {
             return res
                 .status(409)
                 .json({ status: "failed", data: null, error: "El correo ya existe" });
         }
+        }
+
+        res.status(200).json({ status: "succeeded", user, error: null });
+    } catch (error) {
+        console.log(error)
 
         if (error.message.includes("data and salt arguments required")) {
             return res
