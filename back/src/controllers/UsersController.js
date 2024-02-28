@@ -55,16 +55,24 @@ const loadData = async (req, res) => {
                 companyName: user.companyName,
                 country: user.country,
             })
-            await newUser.save()
+           
         }));
-        res.send("Data loaded successfully")
-    } catch (error) {
-        console.log(error)
-        if (error.code === 11000) {
+
+        try {
+             await newUser.save()
+        } catch (error) {
+            if (error.code === 11000) {
             return res
                 .status(409)
                 .json({ status: "failed", data: null, error: "The email already exists" });
         }
+        }
+
+
+        res.send("Data loaded successfully")
+    } catch (error) {
+        console.log(error)
+        
         res.status(500).json({
             status: "error",
             data: null,
