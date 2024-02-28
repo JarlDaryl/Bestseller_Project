@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 import Link from 'next/link';
 import { loginUser } from '../../api/UsersAPIFetch';
 
@@ -20,6 +21,7 @@ export default function UserLoginComponent() {
 
 	const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const emailHandler = (e) => {
         setEmail(e.target.value)
@@ -34,7 +36,7 @@ export default function UserLoginComponent() {
             const user = await loginUser(email, password);
             console.log(user);
         } catch (error) {
-            console.error("Invalid email or password. Please try again.");
+            setErrorMessage("Invalid email or password. Please try again.");
             console.error("Error logging in:", error);
         }
 	}
@@ -55,6 +57,7 @@ export default function UserLoginComponent() {
 							<label>Password</label>
 							<input type='password' name='password' value={password} onChange={passwordHandler}/>
 						</div>
+						{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 						<Button type='submit' variant='contained' onClick={loginHandler}>
 							Log In
 						</Button>
