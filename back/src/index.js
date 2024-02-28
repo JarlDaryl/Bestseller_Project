@@ -9,7 +9,8 @@ const port = 9000;
 app.use(express.json());
 app.use(cors());
 
-const url_mongo = "mongodb+srv://luisarquescalero:4sdnwSqKSqBRVtEn@Bestseller.imakdx0.mongodb.net/?retryWrites=true&w=majority" 
+require("dotenv").config();
+const url_mongo = process.env.DATABASE_URL_DEV;
 
 mongoose.connect(url_mongo);
 

@@ -1,5 +1,6 @@
 const userModel = require("../models/UsersModel");
 const bcrypt = require("bcrypt");
+const {generateToken} = require("../utils/utils");
 
 //Create user with an encrypted password
 const signup = async (req, res) => {
@@ -87,7 +88,28 @@ const login = async (req, res) => {
 }
 
 
+const refreshToken = async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ error: "Access denied" });
+    }
+
+    const user = { userId: req.user.id, email: req.user.email, password: req.user.password};
+    const token = generateToken(user, false);
+    const refreshToken = generateToken(user, true);
+
+    res.status(200).json({
+        status: "succeeded",
+        data: {
+            token,
+            refreshToken,
+        },
+        error: null,
+    });
+}
+
+
 module.exports = {
     signup,
     login,
+    refreshToken,
 }
