@@ -35,6 +35,7 @@ export default function UserLoginComponent() {
 		try {
             const user = await loginUser(email, password);
             console.log(user);
+			window.location.href = '../../DashboardPage';
         } catch (error) {
             setErrorMessage("Invalid email or password. Please try again.");
             console.error("Error logging in:", error);
