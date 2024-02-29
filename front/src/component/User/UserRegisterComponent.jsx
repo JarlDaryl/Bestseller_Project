@@ -33,9 +33,19 @@ export default function UserRegisterComponent() {
     }
 
     const handleCreateUserClick = async () => {
+        if (!email || !password || !companyName || !country) {
+            setErrorMessage('All fields are required');
+            console.error('All fields are required');
+            return;
+        }
         if (password !== confirmPassword) {
             setErrorMessage('Passwords do not match');
             console.error('Passwords do not match');
+            return;
+        }
+        if (password.length < 10) {
+            setErrorMessage('Password must be at least 10 characters');
+            console.error('Password must be at least 10 characters');
             return;
         }
         try {
@@ -46,9 +56,9 @@ export default function UserRegisterComponent() {
                 country,
             })
             setNewUser(newUser)
-            console.log(newUser)
             window.location.href = '../';
-        } catch (error) {
+        }
+        catch (error) {
             console.log("Error creating user:", error.message)
         }
     }

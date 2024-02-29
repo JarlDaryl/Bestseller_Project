@@ -1,10 +1,11 @@
 import React from 'react'
+import CurrentOrdersComponent from '@/component/Order/CurrentOrdersComponent'
 
 
 export default function UserDashboardPage() {
   return (
     <div>
-        <p>This is the dashboard page</p>
+        <CurrentOrdersComponent />
     </div>
   )
 }
