@@ -47,6 +47,7 @@ export default function UserRegisterComponent() {
             })
             setNewUser(newUser)
             console.log(newUser)
+            window.location.href = '../';
         } catch (error) {
             console.log("Error creating user:", error.message)
         }

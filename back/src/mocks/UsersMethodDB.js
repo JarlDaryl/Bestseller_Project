@@ -17,5 +17,4 @@ const newUserModel = (id, email, password, companyName, country) => {
     })
 }
 
-
 module.exports = { find, newUserModel }
