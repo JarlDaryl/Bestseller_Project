@@ -1,63 +1,96 @@
 import React from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import { useState } from 'react';
+import { createUser } from '@/api/UsersAPIFetch';
 import Button from '@mui/material/Button';
 
 export default function UserRegisterComponent() {
 
-    const WhenIWantToSaveTheUser = (values) => {
-        alert(JSON.stringify(values))
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [errorMessage, setErrorMessage] = useState('');
+    const [companyName, setCompanyName] = useState("")
+    const [country, setCountry] = useState("")
+    const [newUser, setNewUser] = useState(null)
+
+    const emailHandler = (e) => {
+        setEmail(e.target.value)
     }
 
-  return (
-    <div>
-    <h1>Create your user</h1>
-        <br />
-    <div>
-        <Formik 
-        initialValues={{
-            email:'',
-            password:'',
-            companyName:'',
-            country:'',
-        }}
-        onSubmit={(values) => WhenIWantToSaveTheUser(values)}>
+    const passwordHandler = (e) => {
+        setPassword(e.target.value)
+    }
 
+    const companyNameHandler = (e) => {
+        setCompanyName(e.target.value)
+    }
 
-                {
-                    ({}) => (<Form>
-                        <div>
-                            <label>Email</label>
-                            <Field type='email' name='email' placeholder='Email...'/>
-                            <ErrorMessage name='email' component='div' />
-                        </div>
-                        <div>
-                            <label>Password</label>
-                            <Field type='password' name='password' placeholder='Password...'/>
-                            <ErrorMessage name='password' component='div' />
-                        </div>
-                        <div>
-                            <label>Company Name</label>
-                            <Field type='text' name='companyName' placeholder='Company...'/>
-                            <ErrorMessage name='companyName' component='div' />
-                        </div>
-                        <div>
-                            <label>Country</label>
-                            <Field type='text' name='country' placeholder='Country...'/>
-                            <ErrorMessage name='country' component='div' />
-                        </div>
-                        <FormGroup>
-                            <FormControlLabel control={<Checkbox />} label='I agree to the terms and conditions' />
-                            </FormGroup>
-                        <Button type='submit' variant='contained'>Create Account</Button>
-                    </Form>)
-                }
-        </Formik>
-    </div>
+    const countryHandler = (e) => {
+        setCountry(e.target.value)
+    }
+    const confirmPasswordHandler = (e) => {
+        setConfirmPassword(e.target.value)
+    }
 
+    const handleCreateUserClick = async () => {
+        if (password !== confirmPassword) {
+            setErrorMessage('Passwords do not match');
+            console.error('Passwords do not match');
+            return;
+        }
+        try {
+            const newUser = await createUser({
+                email,
+                password,
+                companyName,
+                country,
+            })
+            setNewUser(newUser)
+            console.log(newUser)
+        } catch (error) {
+            console.log("Error creating user:", error.message)
+        }
+    }
 
-    </div>
-  )
+    return (
+        <div>
+            <h1>Create your user</h1>
+            <br />
+            <div>
+                <div>
+                    <span>Email:</span>
+                    <input value={email} onChange={emailHandler} required></input>
+                </div>
+                <div>
+                    <span>Password:</span>
+                    <input type="password" value={password} onChange={passwordHandler} required></input>
+                </div>
+                <div>
+                    <span>Confirm Password:</span>
+                    <input type="password" value={confirmPassword} onChange={confirmPasswordHandler} required></input>
+                </div>
+                <div>
+                    <span>Company name:</span>
+                    <input value={companyName} onChange={companyNameHandler} required></input>
+                    <div>
+                        <span>Country:</span>
+                        <input value={country} onChange={countryHandler} required></input>
+                    </div>
+                </div>
+
+                <Button type='submit' variant='contained' onClick={handleCreateUserClick}>Create Account</Button>
+                {errorMessage && <p>{errorMessage}</p>}
+                {newUser && (
+                    <div>
+                        <h2>New user created</h2>
+                        {newUser.email && <p>Email: {newUser.email}</p>}
+                        {newUser.companyName && <p>Company Name: {newUser.companyName}</p>}
+                        {newUser.country && <p>Country: {newUser.country}</p>}
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+
 }
+
