@@ -13,6 +13,12 @@ const getProducts = async (req, res) => {
                 category: product.category,
                 color: product.color,
                 size: product.size,
+                gender: product.gender,
+                brand: product.brand,
+                quantity: product.quantity,
+                provider: product.provider,
+                deliveryDate: product.deliveryDate,
+                price: product.price,
             }
         })
         res.status(200).json({
@@ -32,7 +38,7 @@ const loadData = async (req, res) => {
     try {
 
         await Promise.all(productsDB.map(async (product) => {
-            const newProduct = userModel({
+            const newProduct = productModel({
                 name: product.name,
                 description: product.description,
                 category: product.category,
@@ -74,5 +80,5 @@ const loadData = async (req, res) => {
 
 module.exports = {
     getProducts,
-    loadData
+    loadData,
 }

@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 
 router.get('/', getProducts)
-router.post('/loadData', loadData)
+router.get('/loadData', loadData)
 
 
 module.exports = router;
