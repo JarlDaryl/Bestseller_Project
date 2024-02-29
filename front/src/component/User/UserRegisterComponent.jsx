@@ -84,9 +84,6 @@ export default function UserRegisterComponent() {
                 {newUser && (
                     <div>
                         <h2>New user created</h2>
-                        {newUser.email && <p>Email: {newUser.email}</p>}
-                        {newUser.companyName && <p>Company Name: {newUser.companyName}</p>}
-                        {newUser.country && <p>Country: {newUser.country}</p>}
                     </div>
                 )}
             </div>
