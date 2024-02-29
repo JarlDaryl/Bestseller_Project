@@ -36,7 +36,6 @@ const getProducts = async (req, res) => {
 
 const loadData = async (req, res) => {
     try {
-
         await Promise.all(productsDB.map(async (product) => {
             const newProduct = productModel({
                 name: product.name,
@@ -50,31 +49,23 @@ const loadData = async (req, res) => {
                 provider: product.provider,
                 deliveryDate: product.deliveryDate,
                 price: product.price,
-            })
-           
+            });
+
+            try {
+                await newProduct.save();
+            } catch (error) {
+                if (error.code === 11000) {
+                    return res.status(409).json({ status: "failed", data: null, error: "The email already exists" });
+                }
+            }
         }));
 
-        try {
-             await newProduct.save()
-        } catch (error) {
-            if (error.code === 11000) {
-            return res
-                .status(409)
-                .json({ status: "failed", data: null, error: "The email already exists" });
-        }
-        }
-
-        res.send("Data loaded successfully")
+        res.send("Data loaded successfully");
     } catch (error) {
-        console.log(error)
-        
-        res.status(500).json({
-            status: "error",
-            data: null,
-            error: "Internal server error",
-        });
+        console.log(error);
+        res.status(500).json({ status: "error", data: null, error: "Internal server error" });
     }
-}
+};
 
 
 
