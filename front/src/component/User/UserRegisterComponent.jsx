@@ -38,6 +38,11 @@ export default function UserRegisterComponent() {
             console.error('All fields are required');
             return;
         }
+        if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+            setErrorMessage('Invalid email format');
+            console.error('Invalid email format');
+            return;
+        }
         if (password !== confirmPassword) {
             setErrorMessage('Passwords do not match');
             console.error('Passwords do not match');
