@@ -65,6 +65,7 @@ export default function UserRegisterComponent() {
                 setErrorMessage("The email already exists");
                 console.error("The email already exists");
             } else if (newUser.status === "succeeded") {
+                // setErrorMessage("");
                 setSuccessMessage("New user created");
                 console.log("New user created");
                 // Aquí puedes hacer lo que necesites después de crear un nuevo usuario, como redirigir al usuario a otra página.
