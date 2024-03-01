@@ -9,6 +9,7 @@ export default function UserRegisterComponent() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [companyName, setCompanyName] = useState("")
     const [country, setCountry] = useState("")
     const [newUser, setNewUser] = useState(null)
@@ -59,12 +60,19 @@ export default function UserRegisterComponent() {
                 password,
                 companyName,
                 country,
-            })
-            setNewUser(newUser)
-            window.location.href = '../';
-        }
-        catch (error) {
-            console.log("Error creating user:", error.message)
+            });
+            if (newUser.status === "failed") {
+                setErrorMessage("The email already exists");
+                console.error("The email already exists");
+            } else if (newUser.status === "succeeded") {
+                setSuccessMessage("New user created");
+                console.log("New user created");
+                // Aquí puedes hacer lo que necesites después de crear un nuevo usuario, como redirigir al usuario a otra página.
+                window.location.href = '../';
+            }
+        } catch (error) {
+            console.error("Error creating user:", error.message);
+            setErrorMessage("Error creating user. Please try again later.");
         }
     }
 
@@ -96,11 +104,7 @@ export default function UserRegisterComponent() {
 
                 <Button type='submit' variant='contained' onClick={handleCreateUserClick}>Create Account</Button>
                 {errorMessage && <p>{errorMessage}</p>}
-                {newUser && (
-                    <div>
-                        <h2>New user created</h2>
-                    </div>
-                )}
+            {successMessage && <h2>{successMessage}</h2>}
             </div>
         </div>
     )
