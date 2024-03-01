@@ -9,6 +9,10 @@ const ordersSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product', // Reference to product model
     },
+    total: {
+        type: Number,
+        required: true,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -22,10 +26,7 @@ const ordersSchema = new mongoose.Schema({
         enum: ['pending', 'confirmed', 'inTransit', 'delivered', 'cancelled'],
         default: 'pending',
     },
-    total: {
-        type: Number,
-        required: true,
-    },
+   
 });
 
 const Order = mongoose.model('Order', ordersSchema, "Orders");
