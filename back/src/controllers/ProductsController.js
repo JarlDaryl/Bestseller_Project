@@ -55,12 +55,12 @@ const loadData = async (req, res) => {
                 await newProduct.save();
             } catch (error) {
                 if (error.code === 11000) {
-                    return res.status(409).json({ status: "failed", data: null, error: "The email already exists" });
+                    return res.status(409).json({ status: "failed", data: null, error: "The product already exists" });
                 }
             }
         }));
 
-        res.send("Data loaded successfully");
+        res.send("Products data loaded successfully");
     } catch (error) {
         console.log(error);
         res.status(500).json({ status: "error", data: null, error: "Internal server error" });

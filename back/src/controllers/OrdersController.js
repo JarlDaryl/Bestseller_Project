@@ -39,8 +39,35 @@ const getOrdersByUser = async (req, res) => {
     }
 }
 
+const loadOrdersData = async (req, res) => {
+    try {
+        await Promise.all(ordersDB.map(async (order) => {
+            const newOrder = productModel({
+                products: order.products,
+                quantity: order.quantity,
+                deliveryDate: product.deliveryDate,
+                status: order.status,
+                total: order.total,
+            });
+
+            try {
+                await newOrder.save();
+            } catch (error) {
+                if (error.code === 11000) {
+                    return res.status(409).json({ status: "failed", data: null, error: "The order already exists" });
+                }
+            }
+        }));
+
+        res.send("Orders data loaded successfully");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: "error", data: null, error: "Internal server error" });
+    }
+};
 
 module.exports = {
     getOrdersByUser,
     getOrders,
+    loadOrdersData,
 }
