@@ -40,26 +40,42 @@ const getOrdersByUser = async (req, res) => {
 }
 
 const loadOrdersData = async (req, res) => {
+    let errors = [];
+
     try {
         await Promise.all(ordersDB.map(async (order) => {
-            const newOrder = productModel({
-                products: order.products,
-                quantity: order.quantity,
-                deliveryDate: product.deliveryDate,
-                status: order.status,
-                total: order.total,
-            });
+            // Checks if each product has a 'product' field
+            const allProductsHaveProductField = order.products.every(product => 'product' in product);
 
-            try {
-                await newOrder.save();
-            } catch (error) {
-                if (error.code === 11000) {
-                    return res.status(409).json({ status: "failed", data: null, error: "The order already exists" });
+            if (!allProductsHaveProductField) {
+                errors.push(`Order ${order.id} has one or more products without the "product" field.`);
+            } else {
+                const newOrder = ordersModel({
+                    user: order.user,
+                    products: order.products,
+                    quantity: order.quantity,
+                    deliveryDate: order.deliveryDate,
+                    status: order.status,
+                    total: order.total,
+                });
+
+                try {
+                    await newOrder.save();
+                } catch (error) {
+                    if (error.code === 11000) {
+                        errors.push(`Order ${order.id} already exists.`);
+                    } else {
+                        errors.push(`Error saving order ${order.id}: ${error.message}`);
+                    }
                 }
             }
         }));
 
-        res.send("Orders data loaded successfully");
+        if (errors.length > 0) {
+            res.status(500).json({ status: "error", data: null, error: errors.join(' ') });
+        } else {
+            res.send("Orders data loaded successfully");
+        }
     } catch (error) {
         console.log(error);
         res.status(500).json({ status: "error", data: null, error: "Internal server error" });
