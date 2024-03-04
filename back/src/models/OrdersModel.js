@@ -9,7 +9,7 @@ const ordersSchema = new mongoose.Schema({
         required: true,
     },
     products: [{
-        product: {
+        productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product', // Reference to product model
             required: true,

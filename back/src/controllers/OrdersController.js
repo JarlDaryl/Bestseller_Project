@@ -45,7 +45,7 @@ const loadOrdersData = async (req, res) => {
     try {
         await Promise.all(ordersDB.map(async (order) => {
             // Checks if each product has a 'product' field
-            const allProductsHaveProductField = order.products.every(product => 'product' in product);
+            const allProductsHaveProductField = order.products.every(product => 'productId' in product && 'quantity' in product);
 
             if (!allProductsHaveProductField) {
                 errors.push(`Order ${order.id} has one or more products without the "product" field.`);
