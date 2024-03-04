@@ -1,5 +1,5 @@
 import UserLoginPage from "./UserLoginPage";
-import UserGlobalState from "../context/UserGlobalState";
+import UserGlobalState from "../core/GlobalState";
 
 
 export default function Home() {
