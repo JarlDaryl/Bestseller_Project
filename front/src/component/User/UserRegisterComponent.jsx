@@ -2,8 +2,10 @@ import React from 'react'
 import { useState } from 'react';
 import { createUser } from '@/api/UsersAPIFetch';
 import Button from '@mui/material/Button';
+import { useRouter } from 'next/router';
 
 export default function UserRegisterComponent() {
+    const router = useRouter();
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -68,7 +70,9 @@ export default function UserRegisterComponent() {
                 setErrorMessage("");
                 setSuccessMessage("New user created");
                 console.log("New user created");
-                window.location.href = '../';
+                setTimeout(() => {
+                    router.push('/UserLoginPage');
+                }, 1000);
             }
         } catch (error) {
             console.error("Error creating user:", error.message);
