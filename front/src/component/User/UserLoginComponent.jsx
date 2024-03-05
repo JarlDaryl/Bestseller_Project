@@ -31,6 +31,8 @@ export default function UserLoginComponent() {
 		try {
             const user = await loginUser(email, password);
             console.log(user);
+
+			sessionStorage.setItem('user', JSON.stringify(user));
 			window.location.href = '../../DashboardPage';
         } catch (error) {
             setErrorMessage("Invalid email or password. Please try again.");

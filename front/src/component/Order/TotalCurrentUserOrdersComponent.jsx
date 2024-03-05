@@ -31,9 +31,20 @@ function Item(props) {
   );
 }
 
-export default function TotalCurrentUserOrdersComponent({ userId }) {
+export default function TotalCurrentUserOrdersComponent() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  let userId;
+useEffect(() => {
+  const user = window.sessionStorage.getItem('user');
+  if (user) {
+    console.log(user)
+    const userObj = JSON.parse(user);
+    userId = userObj.data.id;
+    console.log(userId)
+  }
+}, []);
+
 
   useEffect(() => {
     const getAllOrdersByUserAux = async () => {

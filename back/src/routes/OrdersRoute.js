@@ -3,7 +3,7 @@ const router = require('express').Router();
 const verifyToken = require('../middleware/auth');
 
 router.get('/', getOrders)
-router.get('/getOrdersByUser', verifyToken, getOrdersByUser)
+router.get('/getOrdersByUser', getOrdersByUser)
 router.get('/loadOrdersData', loadOrdersData)
 
 module.exports = router;
