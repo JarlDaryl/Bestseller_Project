@@ -3,8 +3,8 @@ const ordersDB = [
     {
         user: "65de28c0e7896de2eabc7754",
         products: [
-            { productId: "65e061ac81e4bdeedce95ff3", quantity: 2 }, // Cotton Shirt
-            { productId: "65e061ac81e4bdeedce95ff7", quantity: 1 }, // Sporty Joggers
+            { productId: "65e061ac81e4bdeedce95ff3", name: "Cotton Shirt" ,quantity: 2 }, // Cotton Shirt
+            { productId: "65e061ac81e4bdeedce95ff7", name: "Sporty Joggers", quantity: 1 }, // Sporty Joggers
         ],
         total: 120,
         createdAt: "2024-02-25",
