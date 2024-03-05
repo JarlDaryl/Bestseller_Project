@@ -37,27 +37,27 @@ export default function OrderComponent({order}) {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <ul>Order {order._id}</ul>
+            <ul>Order {order._id}
             <li>Status: {order.status}</li>
             <li>Total: {order.total}</li>
             <li>Created at: {order.createdAt}</li>
             <li>Delivery Date: {order.deliveryDate}</li>
+            </ul>
           </AccordionSummary>
-          <AccordionDetails><p>hello</p> 
-          
-             {/* <Box sx={{ display: 'grid', gridTemplateRows: 'repeat(3, 1fr)' }}>
+          <AccordionDetails>
+            
+          <h4>Products:</h4>
+              <Box sx={{ display: 'grid', gridTemplateRows: 'repeat(3, 1fr)' }}>
               <Item><div>
-                <h4>Products:</h4>
                 {order.products.map((product, index) => (
                   <div key={index}>
-                    { Replace with actual product properties }
                     <span>Product Name: {product.name}</span>
                     <span>Product Price: {product.price}</span>
                   </div>
                 ))}
               </div>
             </Item>
-            </Box> */}
+            </Box>
           </AccordionDetails>
         </Accordion>
     </div>
