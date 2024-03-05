@@ -35,6 +35,7 @@ export default function TotalCurrentUserOrdersComponent() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   let userId;
+
 useEffect(() => {
   const user = window.sessionStorage.getItem('user');
   if (user) {
@@ -55,7 +56,8 @@ useEffect(() => {
       try {
         console.log('Fetching orders for userId:', userId);
         let ordersByUserAux = await getUserOrdersFromDatabase(userId);
-        setOrders(ordersByUserAux.data);
+        setOrders(ordersByUserAux);
+        console.log(orders)
         setLoading(false);
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -74,15 +76,29 @@ useEffect(() => {
       <div>
         <h2>Orders for user {userId}</h2>
         {orders && orders.map((order) => {
-          return <div key={order.id}>
-            <h3>Order {order.id}</h3>
-            <span>Status: {order.status}</span>
-            <span>Total: {order.total}</span>
-          </div>
+          return (
+            <div key={order._id}>
+              <h3>Order {order._id}</h3>
+              <span>Status: {order.status}</span>
+              <span>Total: {order.total}</span>
+              <span>Created at: {order.createdAt}</span>
+              <span>Delivery Date: {order.deliveryDate}</span>
+              <div>
+                <h4>Products:</h4>
+                {order.products.map((product, index) => (
+                  <div key={index}>
+                    {/* Replace with actual product properties */}
+                    <span>Product Name: {product.name}</span>
+                    <span>Product Price: {product.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
 

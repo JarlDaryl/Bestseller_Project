@@ -29,15 +29,20 @@ const getOrders = async (req, res) => {
 
 const getOrdersByUser = async (req, res) => {
     try {
-        const userId = req.user.userId;
-        const ordersUser = await ordersModel.find({});
-        const userOrders = ordersUser.filter((order) => order.users.includes(userId));
+        const userId = req.params.userId;
+        const userOrders = await ordersModel.find({ user: userId });
+
+        if (!userOrders || userOrders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for the user' });
+        }
 
         res.status(200).json(userOrders);
     } catch (error) {
-        res.status(500).json({ message: 'Error to get users orders', error: error.message });
+        console.error('Error fetching user orders:', error);
+        res.status(500).json({ message: 'Error fetching user orders', error: error.message });
     }
 }
+
 
 const loadOrdersData = async (req, res) => {
     let errors = [];
