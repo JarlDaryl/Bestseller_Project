@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Alert from '@mui/material/Alert';
 import { loginUser } from '../../api/UsersAPIFetch';
+import {useRouter} from 'next/router';
+
 
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -13,11 +15,13 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 }));
 
+
 export default function UserLoginComponent() {
 
 	const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 	const [errorMessage, setErrorMessage] = useState("");
+	const router = useRouter();
 
 	const emailHandler = (e) => {
         setEmail(e.target.value)
@@ -33,7 +37,7 @@ export default function UserLoginComponent() {
             console.log(user);
 
 			sessionStorage.setItem('user', JSON.stringify(user));
-			window.location.href = '../../DashboardPage';
+			router.push('/DashboardPage');
         } catch (error) {
             setErrorMessage("Invalid email or password. Please try again.");
             console.error("Error logging in:", error);
