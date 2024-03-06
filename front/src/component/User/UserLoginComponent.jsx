@@ -5,7 +5,8 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Alert from '@mui/material/Alert';
 import { loginUser } from '../../api/UsersAPIFetch';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,47 +20,50 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function UserLoginComponent() {
 
 	const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+	const [password, setPassword] = useState("")
 	const [errorMessage, setErrorMessage] = useState("");
 	const router = useRouter();
 
 	const emailHandler = (e) => {
-        setEmail(e.target.value)
-    }
-    const passwordHandler = (e) => {
-        setPassword(e.target.value)
-    }
+		setEmail(e.target.value)
+	}
+	const passwordHandler = (e) => {
+		setPassword(e.target.value)
+	}
 
 	const loginHandler = async (e) => {
 		e.preventDefault()
 		try {
-            const user = await loginUser(email, password);
-            console.log(user);
+			const user = await loginUser(email, password);
+			console.log(user);
 
 			sessionStorage.setItem('user', JSON.stringify(user));
 			router.push('/DashboardPage');
-        } catch (error) {
-            setErrorMessage("Invalid email or password. Please try again.");
-            console.error("Error logging in:", error);
-        }
+		} catch (error) {
+			setErrorMessage("Invalid email or password. Please try again.");
+			console.error("Error logging in:", error);
+		}
 	}
 
 	return (
-        <div className='login-display'>
+		<div className='login-display'>
 			<h2>Log In to your account</h2>
-				<div>
-					<label>Email</label>
-					<input type='email' name='email' value={email} onChange={emailHandler}/>
-				</div>
-				<div>
-					<label>Password</label>
-					<input type='password' name='password' value={password} onChange={passwordHandler}/>
-				</div>
-					{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-					<Button type='submit' variant='contained' onClick={loginHandler}>
-						Log In
-					</Button>
-				<span>Forgot your password?</span>
-        </div>
+			<div>
+				<label>Email</label>
+				<input type='email' name='email' value={email} onChange={emailHandler} />
+			</div>
+			<div>
+				<label>Password</label>
+				<input type='password' name='password' value={password} onChange={passwordHandler} />
+			</div>
+			{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+			<Button type='submit' variant='contained' onClick={loginHandler}>
+				Log In
+			</Button>
+			<Link
+				href={{
+					pathname: "/ForgotPasswordPage",
+				}}>Forgot your password?</Link>
+		</div>
 	);
 }

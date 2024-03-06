@@ -1,6 +1,4 @@
 import React from 'react'
-import CurrentOrdersComponent from '@/component/Order/TotalCurrentUserOrdersComponent'
-import CurrentUserOrdersComponent from '@/component/Order/TotalCurrentUserOrdersComponent'
 import TotalCurrentUserOrdersComponent from '@/component/Order/TotalCurrentUserOrdersComponent'
 
 export default function UserDashboardPage() {
