@@ -8,12 +8,29 @@ export const loginUser = async (email, password) => {
     });
 
     if (response.ok) {
-        const user = await response.json();
-        return user;
+            return response.json();
     } else {
         throw new Error('Failed to login');
     }
 }
+
+export const verifyUser = async (token, email) => {
+    const response = await fetch('http://localhost:9000/login/verifyLogin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          "auth-token": token,
+        },
+        body: JSON.stringify({ email })
+    });
+
+    if (response.ok) {
+            return response.json();
+    } else {
+        throw new Error('Failed to login');
+    }
+}
+
 
 export const createUser = async (bodyParam) => {
     const response = await fetch('http://localhost:9000/login/signup', {
