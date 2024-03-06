@@ -28,23 +28,25 @@ function Item(props) {
 }
 
 export default function ProductComponent({order}) {
-	return (
-		<div>
-			<AccordionDetails>
-				<h4>Products:</h4>
-				<Box sx={{ display: 'grid', gridTemplateRows: 'repeat(1, 1fr)' }}>
-					<Item>
-						<div>
-							{order.products.map((product, index) => (
-								<ul key={index}>
-									<li>Product ID: {product.productId}</li>
-									<li>Product Quantity: {product.quantity}</li>
-								</ul>
-							))}
-						</div>
-					</Item>
-				</Box>
-			</AccordionDetails>
-		</div>
-	);
+    return (
+        <div>
+            <AccordionDetails>
+                <h4>Products:</h4>
+                <Box sx={{ display: 'grid', gridTemplateRows: 'repeat(1, 1fr)' }}>
+                    <Item>
+                        <div>
+                            {order.products.map((product, index) => (
+                                <ul key={index}>
+                                    <li>Product ID: {product.productId._id}</li>
+                                    <li>Product Name: {product.productId.name}</li>
+                                    <li>Product Quantity: {product.productId.quantity}</li>
+                                    {/* Add more product details here as needed */}
+                                </ul>
+                            ))}
+                        </div>
+                    </Item>
+                </Box>
+            </AccordionDetails>
+        </div>
+    );
 }

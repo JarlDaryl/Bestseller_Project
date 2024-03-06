@@ -30,7 +30,7 @@ const getOrders = async (req, res) => {
 const getOrdersByUser = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const userOrders = await ordersModel.find({ user: userId });
+        const userOrders = await ordersModel.find({ user: userId }).populate('products.productId');
 
         if (!userOrders || userOrders.length === 0) {
             return res.status(404).json({ message: 'No orders found for the user' });
