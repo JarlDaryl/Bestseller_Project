@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Alert from '@mui/material/Alert';
-import { loginUser } from '../../api/UsersAPIFetch';
+import { loginUser, verifyUser } from '../../api/UsersAPIFetch';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -34,9 +34,12 @@ export default function UserLoginComponent() {
 	const loginHandler = async (e) => {
 		e.preventDefault()
 		try {
+			// const user = await loginUser(email, password);
 			const user = await loginUser(email, password);
-			console.log(user);
+			const token = user.data.token;
+			const tokenResponse = await verifyUser(token, email)
 
+			console.log(user)
 			sessionStorage.setItem('user', JSON.stringify(user));
 			router.push('/DashboardPage');
 		} catch (error) {

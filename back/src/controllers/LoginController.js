@@ -59,8 +59,8 @@ const login = async (req, res) => {
                             email: data.email,
                             companyName: data.companyName,
                             country: data.country,
-                            token,
-                            refreshToken,
+                            token: token,
+                            refreshToken: refreshToken,
                         },
                         error: null,
                     });
@@ -107,9 +107,27 @@ const refreshToken = async (req, res) => {
     });
 }
 
+const verifyLogin = async (req, res) => {
+    if (!req.body) {
+        return res.status(401).json({ error: "Access denied" });
+    }
+    const data = await userModel.findOne({ email: req.body.email });
+    res.status(200).json({
+        status: "succeeded",
+        data: {
+            id: data._id,
+            email: data.email,
+            companyName: data.companyName,
+            country: data.country,
+        },
+        error: null,
+    });
+}
+
 
 module.exports = {
     signup,
     login,
     refreshToken,
+    verifyLogin
 }

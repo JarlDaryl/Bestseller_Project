@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Box, { BoxProps } from '@mui/material/Box';
@@ -28,6 +28,17 @@ function Item(props) {
 }
 
 export default function ProductComponent({order}) {
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        let total = 0;
+        order.products.forEach(product => {
+            total += product.productId.price * product.productId.quantity;
+        });
+        total = total.toFixed(2);
+        setTotal(total);
+    }, [order]);
+
     return (
         <div>
             <AccordionDetails>
@@ -40,6 +51,7 @@ export default function ProductComponent({order}) {
                                     <li>Product ID: {product.productId._id}</li>
                                     <li>Product Name: {product.productId.name}</li>
                                     <li>Product Quantity: {product.productId.quantity}</li>
+                                    <li>Product Price: {product.productId.price}</li>
                                     {/* Add more product details here as needed */}
                                 </ul>
                             ))}
@@ -47,6 +59,7 @@ export default function ProductComponent({order}) {
                     </Item>
                 </Box>
             </AccordionDetails>
+            <div>Total: {total} €</div>
         </div>
     );
 }
