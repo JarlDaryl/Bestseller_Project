@@ -48,10 +48,12 @@ export default function ProductComponent({order}) {
                         <div>
                             {order.products.map((product, index) => (
                                 <ul key={index}>
-                                    <li>Product ID: {product.productId._id}</li>
-                                    <li>Product Name: {product.productId.name}</li>
-                                    <li>Product Quantity: {product.productId.quantity}</li>
-                                    <li>Product Price: {product.productId.price}</li>
+                                    <li><img src={product.productId.img} alt={product.productId.description} /></li>
+                                    <li>Name: {product.productId.name}</li>
+                                    <li>Quantity: {product.productId.quantity}</li>
+                                    <li>Price: {product.productId.price}</li>
+                                    <li>Description: {product.productId.description}</li>
+                                    <li>ID: {product.productId._id}</li>
                                     {/* Add more product details here as needed */}
                                 </ul>
                             ))}

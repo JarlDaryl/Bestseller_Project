@@ -58,7 +58,6 @@ function Item(props) {
             >
               <ul>Order {order._id}
               <li>Status: {order.status}</li>
-              <li>Total: {order.total}</li>
               <li>Created at: {order.createdAt}</li>
               <li>Delivery Date: {order.deliveryDate}</li>
               </ul>
