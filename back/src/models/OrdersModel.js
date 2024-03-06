@@ -13,16 +13,7 @@ const ordersSchema = new Schema({
             ref: 'Product', // Reference to product model
             required: true,
         },
-        quantity: {
-            type: Number,
-            required: true,
-        },
     }],
-    total: {
-        type: Number,
-        required: true,
-    },
-
     createdAt: {
         type: Date,
         default: Date.now,

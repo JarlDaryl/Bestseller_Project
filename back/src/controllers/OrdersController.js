@@ -9,8 +9,7 @@ const getOrders = async (req, res) => {
             return {
                 products: order.products,
                 deliveryDate: order.deliveryDate,
-                status: order.status,
-                total: order.total
+                status: order.status
             }
         })
         res.status(200).json({
@@ -61,7 +60,6 @@ const loadOrdersData = async (req, res) => {
                     quantity: order.quantity,
                     deliveryDate: order.deliveryDate,
                     status: order.status,
-                    total: order.total,
                 });
 
                 try {

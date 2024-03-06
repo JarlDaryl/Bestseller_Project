@@ -10,9 +10,9 @@ const find = (id) => {
     }
 }
 
-const newOrderModel = (user, products, total, createdAt, deliveryDate, status) => {
+const newOrderModel = (user, products, createdAt, deliveryDate, status) => {
     ordersDB.push({
-        user, products, total, createdAt, deliveryDate, status,
+        user, products, createdAt, deliveryDate, status,
     })
 }
 

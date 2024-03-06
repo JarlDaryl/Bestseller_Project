@@ -16,9 +16,8 @@ const getProducts = async (req, res) => {
                 gender: product.gender,
                 brand: product.brand,
                 quantity: product.quantity,
-                provider: product.provider,
-                deliveryDate: product.deliveryDate,
                 price: product.price,
+                img: product.img,
             }
         })
         res.status(200).json({
@@ -46,9 +45,8 @@ const loadData = async (req, res) => {
                 gender: product.gender,
                 brand: product.brand,
                 quantity: product.quantity,
-                provider: product.provider,
-                deliveryDate: product.deliveryDate,
                 price: product.price,
+                img: product.img,
             });
 
             try {

@@ -35,18 +35,14 @@ const productSchema = new Schema({
         required: true,
         min: 0,
     },
-    provider: {
-        type: String,
-        required: true,
-    },
-    deliveryDate: {
-        type: Date,
-        required: true,
-    },
     price: {
         type: Number,
         required: true,
         min: 0,
+    },
+    img: {
+        type: String,
+        required: true,
     },
 });
 
