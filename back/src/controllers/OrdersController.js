@@ -85,8 +85,22 @@ const loadOrdersData = async (req, res) => {
     }
 };
 
+const updateOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const newOrderData = req.body;
+        const updatedOrder = await updateOrderInDatabase(orderId, newOrderData);
+
+        res.status(200).json(updatedOrder);
+    } catch (error) {
+        console.error('Failed to update order:', error);
+        res.status(500).json({ message: 'Failed to update order' });
+    }
+}
+
 module.exports = {
     getOrdersByUser,
     getOrders,
     loadOrdersData,
+    updateOrder,
 }
