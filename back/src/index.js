@@ -5,7 +5,7 @@ const userRouter = require('./routes/UsersRoute');
 const loginRouter = require('./routes/LoginRoute');
 const productsRouter = require('./routes/ProductsRoute');
 const ordersRouter = require('./routes/OrdersRoute');
-const emailPasswordResetRouter = require('./routes/EmailPasswordResetRoute')
+const passwordResetRouter = require('./routes/PasswordResetRoute')
 const app = express();
 const port = 9000;
 
@@ -35,7 +35,7 @@ app.use('/users', userRouter);
 app.use('/login', loginRouter);
 app.use('/products', productsRouter)
 app.use('/orders', ordersRouter)
-app.use('/password', emailPasswordResetRouter)
+app.use('/password', passwordResetRouter)
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

@@ -20,3 +20,19 @@ export const sendEmail = async (emailData) => {
         throw error;
     }
 };
+
+export async function resetPassword(newPassword) {
+    const response = await fetch('http://localhost:9000/password/resetPassword', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newPassword }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to reset password');
+    }
+
+    return response.json();
+}
