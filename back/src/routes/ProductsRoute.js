@@ -4,6 +4,6 @@ const router = require('express').Router();
 
 router.get('/', getProducts)
 router.get('/loadData', loadData)
-router.get('/suggestProductChanges', suggestProductChanges)
+router.get('/suggestedProducts/:productId', suggestProductChanges)
 
 module.exports = router;

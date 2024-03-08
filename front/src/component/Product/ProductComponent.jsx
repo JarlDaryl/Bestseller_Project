@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Box, { BoxProps } from '@mui/material/Box';
+import GenerateProductSuggestionComponent from './GenerateProductSuggestionComponent';
 
 function Item(props) {
 	const { sx, ...other } = props;
@@ -47,15 +48,19 @@ export default function ProductComponent({order}) {
                     <Item>
                         <div>
                             {order.products.map((product, index) => (
-                                <ul key={index}>
-                                    <li><img src={product.productId.img} alt={product.productId.description} /></li>
-                                    <li>Name: {product.productId.name}</li>
-                                    <li>Quantity: {product.productId.quantity}</li>
-                                    <li>Price: {product.productId.price}</li>
-                                    <li>Description: {product.productId.description}</li>
-                                    <li>ID: {product.productId._id}</li>
-                                    {/* Add more product details here as needed */}
-                                </ul>
+                                <div key={index}>
+                                    <ul>
+                                        <li><img src={product.productId.img} alt={product.productId.description} /></li>
+                                        <li>Name: {product.productId.name}</li>
+                                        <li>Category: {product.productId.category}</li>
+                                        <li>Quantity: {product.productId.quantity}</li>
+                                        <li>Price: {product.productId.price}</li>
+                                        <li>Description: {product.productId.description}</li>
+                                        <li>ID: {product.productId._id}</li>
+                                        {/* Add more product details here as needed */}
+                                    </ul>
+                                    <GenerateProductSuggestionComponent productId={product.productId._id}/>
+                                </div>
                             ))}
                         </div>
                     </Item>

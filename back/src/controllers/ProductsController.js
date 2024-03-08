@@ -87,9 +87,17 @@ const loadData = async (req, res) => {
 
 const suggestProductChanges = async (req, res) => {
     try {
-        const { categoryId } = req.body;
-        const similarProducts = await productModel.find({ category: categoryId });
+        const { productId } = req.params;
+        console.log('productId en BACK:', productId)
+        const product = await productModel.findById(String(productId));
 
+        if (!product) {
+            res.status(404).json({ status: "failed", data: null, error: "Product not found. Error en Controller" });
+            return;
+        }
+
+        const similarProducts = await productModel.find({ category: product.category, gender: product.gender, _id: { $ne: product._id }});
+        console.log('similarProducts:', similarProducts)
         res.status(200).json({ status: "succeeded", data: similarProducts, error: null });
     } catch (error) {
         res.status(500).json({ status: "failed", data: null, error: error.message });
