@@ -23,14 +23,15 @@ export const fetchProducts = async (userId, token) => {
     }
 };
 
-export const suggestProductsChanges = async (userId, suggestions) => {
+export const suggestProductsChanges = async (product, order) => {
+
     try {
-        const response = await fetch(`http://localhost:9000/products/${userId}/suggestions`, {
+        const response = await fetch(`http://localhost:9000/products/suggestProductChanges`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(suggestions)
+            body: JSON.stringify({ product, order })
         });
 
         if (!response.ok) {

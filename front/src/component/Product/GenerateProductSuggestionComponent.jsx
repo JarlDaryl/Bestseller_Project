@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { getUserOrdersFromDatabase, updateOrderInDatabase } from '@/api/OrdersAPIFetch';
-import { fetchProducts } from '@/api/ProductsAPIFetch';
-import { getAuthToken } from '@/api/LoginAPIFetch';
+import { updateOrderInDatabase } from '@/api/OrdersAPIFetch';
 
-export default function GenerateProductSuggestionComponent({ userId }) {
+export default function GenerateProductSuggestionComponent() {
     const [products, setProducts] = useState([]);
     const [orders, setOrders] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    let userId;
+
+    useEffect(() => {
+        const user = window.sessionStorage.getItem('user');
+        if (user) {
+            console.log(user)
+            const userObj = JSON.parse(user);
+            userId = userObj.data.id;
+            console.log(userId)
+        }
+    }, []);
 
     const addToOrder = async (productId) => {
         try {
@@ -23,44 +32,34 @@ export default function GenerateProductSuggestionComponent({ userId }) {
     };
 
     useEffect(() => {
-        if (!userId) {
-            setError('User ID is not provided');
-            setLoading(false);
-            return;
-        }
-        const fetchOrdersAndProducts = async () => {
+        const fetchProductSuggestions = async (categoryId) => {
             try {
-                const userOrders = await getUserOrdersFromDatabase(userId);
-                setOrders(userOrders);
-                const authToken = await getAuthToken('email', 'password');
-                const productsData = await fetchProducts(userId, authToken);
-                setProducts(productsData);
-                setLoading(false);
-            } catch (error) {
-                console.error('Failed to fetch orders or products:', error);
-                setError(error.message);
-                setLoading(false);
-            }
-        };
+                const response = await suggestProductChanges({ categoryId }); // Assuming you pass the categoryId in the request body
+                const similarProducts = response.data;
 
-        fetchOrdersAndProducts();
-    }, [userId]);
-
-    useEffect(() => {
-        const generateProductSuggestions = (products, orders) => {
-            const orderedProducts = new Set();
-            for (const order of orders) {
-                for (const product of order.products) {
-                    orderedProducts.add(product.id);
+                const orderedProducts = new Set();
+                for (const order of orders) {
+                    for (const product of order.products) {
+                        orderedProducts.add(product.id);
+                    }
                 }
-            }
 
-            const suggestions = products.filter(product => !orderedProducts.has(product.id));
-            return suggestions;
+                const suggestions = similarProducts.filter(product => !orderedProducts.has(product.id));
+                setSuggestions(suggestions);
+            } catch (error) {
+                console.error('Failed to fetch product suggestions:', error);
+                setError(error.message);
+            }
         };
 
-        const newSuggestions = generateProductSuggestions(products, orders);
-        setSuggestions(newSuggestions);
+        const filteredProducts = products.filter(product => product.category === 'CATEGORY_NAME');
+        const categoryId = filteredProducts.length > 0 ? filteredProducts[0].category : null;
+
+        if (categoryId) {
+            fetchProductSuggestions(categoryId);
+        } else {
+            setSuggestions([]);
+        }
     }, [products, orders]);
 
     return (

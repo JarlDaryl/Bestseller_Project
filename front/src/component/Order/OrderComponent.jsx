@@ -62,7 +62,7 @@ function Item(props) {
               <li>Delivery Date: {order.deliveryDate}</li>
               </ul>
             </AccordionSummary>
-            <ProductComponent order={order} />
+            <ProductComponent key={order.id} order={order} />
           </Accordion>
           </Item>
       </div>
