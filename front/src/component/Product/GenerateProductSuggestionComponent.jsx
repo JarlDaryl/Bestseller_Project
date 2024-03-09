@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
+import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 
-export default function GenerateProductSuggestionComponent({productId}) {
+export default function GenerateProductSuggestionComponent({ productId }) {
     console.log('productId:', productId)
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [order, setOrder] = useState([]);
 
-    const addToOrder = (id) => {
-        // Implement your addToOrder function here
-        console.log(`Product ${id} added to order`);
+    const addToOrder = (productId) => {
+        const selectedProduct = suggestions.find(product => product._id === productId);
+        setOrder(prevOrder => [...prevOrder, selectedProduct]);
+        console.log(`Product ${productId} added to order`);
     };
 
     useEffect(() => {
@@ -27,22 +30,25 @@ export default function GenerateProductSuggestionComponent({productId}) {
                 setLoading(false);
             });
     }, [productId]);
+
     return (
         <div>
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {!loading && !error && (
                 <>
-                    <h2>Suggestions</h2>
+                    <h2>You may also like</h2>
                     {suggestions.map((suggestion, index) => (
                         <div key={index}>
-                            <p>Product Name: {suggestion.name}</p>
-                            <p>Product Price: {suggestion.price}</p>
-                            <p>Product Category: {suggestion.category}</p>
-                            <p>Product ID: {suggestion._id}</p>
-                            <button onClick={() => addToOrder(suggestion.id)}>Add to Order</button>
+                            <li><img src={suggestion.img} /></li>
+                            <p>{suggestion.name}</p>
+                            <p>{suggestion.description}</p>
+                            <p>{suggestion.gender}</p>
+                            <p>Price: {suggestion.price}</p>
+                            <button onClick={() => addToOrder(suggestion._id)}>Add to Order</button>
                         </div>
                     ))}
+                    <NewSuggestedProductsAddedComponent order={order} />
                 </>
             )}
         </div>

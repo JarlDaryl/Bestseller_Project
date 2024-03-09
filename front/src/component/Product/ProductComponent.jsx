@@ -43,7 +43,7 @@ export default function ProductComponent({order}) {
     return (
         <div>
             <AccordionDetails>
-                <h4>Products:</h4>
+                <h2>Products:</h2>
                 <Box sx={{ display: 'grid', gridTemplateRows: 'repeat(1, 1fr)' }}>
                     <Item>
                         <div>
@@ -51,12 +51,11 @@ export default function ProductComponent({order}) {
                                 <div key={index}>
                                     <ul>
                                         <li><img src={product.productId.img} alt={product.productId.description} /></li>
-                                        <li>Name: {product.productId.name}</li>
-                                        <li>Category: {product.productId.category}</li>
+                                        <li>{product.productId.name}</li>
+                                        <li>{product.productId.description}</li>
+                                        <p>{product.productId.gender}</p>
                                         <li>Quantity: {product.productId.quantity}</li>
                                         <li>Price: {product.productId.price}</li>
-                                        <li>Description: {product.productId.description}</li>
-                                        <li>ID: {product.productId._id}</li>
                                         {/* Add more product details here as needed */}
                                     </ul>
                                     <GenerateProductSuggestionComponent productId={product.productId._id}/>
