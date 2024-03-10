@@ -8,11 +8,15 @@ export default function GenerateProductSuggestionComponent({ productId }) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [order, setOrder] = useState([]);
+    const [quantity, setQuantity] = useState(1);
+    const [totalPrice, setTotalPrice] = useState(0);
 
-    const addToOrder = (productId) => {
+    const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
-        setOrder(prevOrder => [...prevOrder, selectedProduct]);
-        console.log(`Product ${productId} added to order`);
+        const productsToAdd = Array(quantity).fill(selectedProduct);
+        setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
+        setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
+        console.log(`Product ${productId} added to order ${quantity} times`);
     };
 
     useEffect(() => {
@@ -45,10 +49,17 @@ export default function GenerateProductSuggestionComponent({ productId }) {
                             <p>{suggestion.description}</p>
                             <p>{suggestion.gender}</p>
                             <p>Price: {suggestion.price}</p>
-                            <button onClick={() => addToOrder(suggestion._id)}>Add to Order</button>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                            />
+                            <button onClick={() => addToOrder(suggestion._id, quantity)}>Add to Order</button>
                         </div>
                     ))}
-                    <NewSuggestedProductsAddedComponent order={order} />
+                    <NewSuggestedProductsAddedComponent order={order} quantity={quantity} />
+                    <p>Total Price: {totalPrice}</p>
                 </>
             )}
         </div>

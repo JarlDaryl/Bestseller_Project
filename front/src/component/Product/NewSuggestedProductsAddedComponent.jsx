@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function NewSuggestedProductsAddedComponent({ order }) {
+export default function NewSuggestedProductsAddedComponent({ order, quantity }) {
 
     return (
         <>
@@ -11,10 +11,10 @@ export default function NewSuggestedProductsAddedComponent({ order }) {
                     <p>{orderedProduct.name}</p>
                     <p>{orderedProduct.description}</p>
                     <p>{orderedProduct.gender}</p>
-                    <p>Price: {orderedProduct.price}</p>
-
+                    <p>Quantity: {quantity}</p>
                 </div>
             ))}
+
         </>
     );
 };
