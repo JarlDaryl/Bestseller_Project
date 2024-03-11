@@ -13,6 +13,13 @@ export default function GenerateProductSuggestionComponent({ productId }) {
 
     const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
+        const productInOrder = order.find(product => product._id === productId);
+
+        if (productInOrder) {
+            console.log(`Product ${productId} is already in the order`);
+            return;
+        }
+
         const productsToAdd = Array(quantity).fill(selectedProduct);
         setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
@@ -59,7 +66,7 @@ export default function GenerateProductSuggestionComponent({ productId }) {
                         </div>
                     ))}
                     <NewSuggestedProductsAddedComponent order={order} quantity={quantity} />
-                    <p>Total Price: {totalPrice}</p>
+                    {order.length > 0 && <p>Total Price: {totalPrice.toFixed(2)}</p>}
                 </>
             )}
         </div>
