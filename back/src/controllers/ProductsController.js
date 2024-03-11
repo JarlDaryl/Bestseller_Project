@@ -18,6 +18,7 @@ const getProducts = async (req, res) => {
                 quantity: product.quantity,
                 price: product.price,
                 img: product.img,
+                viable: product.viable,
             }
         })
         res.status(200).json({
@@ -47,6 +48,7 @@ const loadData = async (req, res) => {
                 quantity: product.quantity,
                 price: product.price,
                 img: product.img,
+                viablie: product.viable,
             });
 
             try {
@@ -96,7 +98,12 @@ const suggestProductChanges = async (req, res) => {
             return;
         }
 
-        const similarProducts = await productModel.find({ category: product.category, gender: product.gender, _id: { $ne: product._id }});
+        const similarProducts = await productModel.find({
+            category: product.category, 
+            gender: product.gender, 
+            _id: { $ne: product._id },
+            viable: true
+        }).sort({ price: -1}).limit(3);
         console.log('similarProducts:', similarProducts)
         res.status(200).json({ status: "succeeded", data: similarProducts, error: null });
     } catch (error) {

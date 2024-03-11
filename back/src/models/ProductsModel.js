@@ -44,6 +44,10 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
+    viable: {
+        type: Boolean,
+        required: true,
+    }
 });
 
 const product = mongoose.model('Product', productSchema, "Product");
