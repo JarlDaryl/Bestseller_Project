@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 
-export default function GenerateProductSuggestionComponent({ productId }) {
+export default function GenerateProductSuggestionComponent({ productId, setTotal, total }) {
     console.log('productId:', productId)
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
@@ -10,6 +10,7 @@ export default function GenerateProductSuggestionComponent({ productId }) {
     const [order, setOrder] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [productAddedList, setProductAddedList] = useState([])
 
     const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
@@ -17,14 +18,25 @@ export default function GenerateProductSuggestionComponent({ productId }) {
 
         if (productInOrder) {
             console.log(`Product ${productId} is already in the order`);
-            return;
+            setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
+            return
         }
+        setProductAddedList([...productAddedList, selectedProduct])
 
         const productsToAdd = Array(quantity).fill(selectedProduct);
         setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
+        
     };
+
+    useEffect(() => {
+        setTotal(totalPrice)
+    }, [totalPrice]);
+
+    useEffect(() => {
+        console.log(productAddedList)
+    }, [productAddedList]);
 
     useEffect(() => {
         getSuggestedProductsFromDatabase(productId)
@@ -65,7 +77,7 @@ export default function GenerateProductSuggestionComponent({ productId }) {
                             <button onClick={() => addToOrder(suggestion._id, quantity)}>Add to Order</button>
                         </div>
                     ))}
-                    <NewSuggestedProductsAddedComponent order={order} quantity={quantity} />
+                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} />
                     {order.length > 0 && <p>Total Price: {totalPrice.toFixed(2)}</p>}
                 </>
             )}

@@ -13,11 +13,11 @@ export default function Routes () {
   return (
     <Switch>
       <Route path="/index" component={Home} />
-      <Route path="/DashboardPage" component={DashboardPage} />
-      <Route path="/UserLoginPage" component={UserLoginPage} />
-      <Route path="/UserRegisterPage" component={UserRegisterPage} />
-      <Route path="/ResetPasswordPage" component={ResetPasswordPage} />
-      <Route path="/ForgotPasswordPage" component={ForgotPasswordPage} />
+      <Route path="/dashboard" component={DashboardPage} />
+      <Route path="/login" component={UserLoginPage} />
+      <Route path="/register" component={UserRegisterPage} />
+      <Route path="/reset-password" component={ResetPasswordPage} />
+      <Route path="/forgot-password" component={ForgotPasswordPage} />
     </Switch>
   )
 };
