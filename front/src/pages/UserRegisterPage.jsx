@@ -5,7 +5,11 @@ export default function UserRegisterPage() {
 
   return (
     <>
-    <UserRegisterComponent />
+      <div className='register-page-container'>
+        <UserRegisterComponent />
+      </div>
     </>
   )
 }
+
+

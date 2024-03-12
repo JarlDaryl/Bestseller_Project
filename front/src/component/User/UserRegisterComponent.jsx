@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
 import { createUser } from '@/api/UsersAPIFetch';
-import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 
 export default function UserRegisterComponent() {
@@ -81,34 +80,42 @@ export default function UserRegisterComponent() {
     }
 
     return (
-        <div>
-            <h1>Create your user</h1>
-            <br />
+        <div className='register-display'>
+            <h2 className='register-h2'>Create your user</h2>
             <div>
+                <span className='register-title'>Email </span>
                 <div>
-                    <span>Email:</span>
-                    <input value={email} onChange={emailHandler} required></input>
+                    <input value={email} onChange={emailHandler} required className='register-input'></input>
                 </div>
+            </div>
+            <div>
+                <span className='register-title'>Password </span>
                 <div>
-                    <span>Password:</span>
-                    <input type="password" value={password} onChange={passwordHandler} required></input>
+                    <input type="password" value={password} onChange={passwordHandler} required className='register-input'></input>
                 </div>
+            </div>
+            <div>
+                <span className='register-title'>Confirm Password </span>
                 <div>
-                    <span>Confirm Password:</span>
-                    <input type="password" value={confirmPassword} onChange={confirmPasswordHandler} required></input>
+                    <input type="password" value={confirmPassword} onChange={confirmPasswordHandler} required className='register-input'></input>
                 </div>
+            </div>
+            <div>
+                <span className='register-title'>Company name </span>
                 <div>
-                    <span>Company name:</span>
-                    <input value={companyName} onChange={companyNameHandler} required></input>
-                    <div>
-                        <span>Country:</span>
-                        <input value={country} onChange={countryHandler} required></input>
-                    </div>
+                    <input value={companyName} onChange={companyNameHandler} required className='register-input'></input>
                 </div>
-
-                <Button type='submit' variant='contained' onClick={handleCreateUserClick}>Create Account</Button>
+            </div>
+            <div>
+                <span className='register-title'>Country </span>
+                <div>
+                    <input value={country} onChange={countryHandler} required className='register-input'></input>
+                </div>
+            </div>
+            <div>
+                <button type='submit' variant='contained' onClick={handleCreateUserClick} className='register-button'>Create Account</button>
                 {errorMessage && <p>{errorMessage}</p>}
-            {successMessage && <h2>{successMessage}</h2>}
+                {successMessage && <h2>{successMessage}</h2>}
             </div>
         </div>
     )

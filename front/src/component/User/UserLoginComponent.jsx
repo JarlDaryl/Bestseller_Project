@@ -1,20 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Alert from '@mui/material/Alert';
 import { loginUser, verifyUser } from '../../api/UsersAPIFetch';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
-
-const Item = styled(Paper)(({ theme }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	color: theme.palette.text.secondary,
-}));
 
 
 export default function UserLoginComponent() {
@@ -34,7 +22,6 @@ export default function UserLoginComponent() {
 	const loginHandler = async (e) => {
 		e.preventDefault()
 		try {
-			// const user = await loginUser(email, password);
 			const user = await loginUser(email, password);
 			const token = user.data.token;
 			const tokenResponse = await verifyUser(token, email)
@@ -50,23 +37,27 @@ export default function UserLoginComponent() {
 
 	return (
 		<div className='login-display'>
-			<h2>Log In to your account</h2>
+			<h2 className='login-h2'>Log In to your account</h2>
 			<div>
-				<label>Email</label>
-				<input type='email' name='email' value={email} onChange={emailHandler} />
+				<label className='login-title'>Email </label>
+				<div>
+					<input type='email' name='email' value={email} onChange={emailHandler} className='login-input' />
+				</div>
 			</div>
 			<div>
-				<label>Password</label>
-				<input type='password' name='password' value={password} onChange={passwordHandler} />
+				<label className='login-title'>Password </label>
+				<div>
+					<input type='password' name='password' value={password} onChange={passwordHandler} className='login-input' />
+				</div>
 			</div>
 			{errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-			<Button type='submit' variant='contained' onClick={loginHandler}>
+			<button type='submit' variant='contained' onClick={loginHandler} className='login-button'>
 				Log In
-			</Button>
+			</button>
 			<Link
 				href={{
 					pathname: "/ForgotPasswordPage",
-				}}>Forgot your password?</Link>
+				}} className='login-forgot-password-link'>Have you forgotten your password?</Link>
 		</div>
 	);
 }

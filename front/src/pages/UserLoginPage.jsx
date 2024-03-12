@@ -5,16 +5,16 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 export default function UserLoginPage() {
-  return (
-    <Box sx={{ flexGrow: 5 }}>
+	return (
+		<Box sx={{ flexGrow: 5 }}>
 			<Grid container spacing={2}>
 				<Grid item xs={8}>
-          <UserLoginComponent/>
+					<UserLoginComponent />
 				</Grid>
 				<Grid item xs={4}>
-        	<UserAccountRegisterComponent/>
+					<UserAccountRegisterComponent />
 				</Grid>
 			</Grid>
 		</Box>
-  )
+	)
 }

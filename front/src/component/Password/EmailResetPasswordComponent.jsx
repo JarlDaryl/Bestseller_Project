@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { sendEmail } from '@/api/PasswordAPIFetch';
-import { Button, Alert } from '@mui/material'
+// import Alert from '@material-ui/lab/Alert';
 
 export default function EmailResetPasswordComponent() {
     const [email, setEmail] = useState()
@@ -26,18 +26,24 @@ export default function EmailResetPasswordComponent() {
 
     return (
         <div>
-            <h2>Password assistance</h2>
-            <h3>Enter the email address associated with your Bestseller account.</h3>
-            <h3>We will send you an email with instructions on how to recover it</h3>
-            <div>
-                <label>Email</label>
-                <input type='email' name='email' value={email} onChange={emailHandler} />
+            <div className='email-reset-password-container'>
+                <h2 className='email-reset-password-h2'>Password assistance</h2>
+                <p className='email-reset-password-info-text' >Enter the email address associated with your Bestseller account. We will send you an email with instructions on how to recover it</p>
+                <div>
+                    <label className='email-reset-password-title'>Email</label>
+                    <div>
+                        <input type='email' name='email' value={email} onChange={emailHandler} className='email-reset-password-input' />
+                    </div>
+                </div>
+                <div>
+                    <button type='submit' variant='contained' onClick={sendEmailPasswordResetHandler} className='reset-password-email-button'>
+                        Continue
+                    </button>
+                    {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+                </div>
+                <p className='email-reset-password-info-text'>Has your email changed?. If you no longer use the email address associated with your Bestseller account, you may contact Customer Service for help restoring access to your account.</p>
+
             </div>
-            {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-            <Button type='submit' variant='contained' onClick={sendEmailPasswordResetHandler}>
-                Continue
-            </Button>
-            <h4>Has your email changed?. If you no longer use the email address associated with your Bestseller account, you may contact Customer Service for help restoring access to your account.</h4>
         </div>
     )
 

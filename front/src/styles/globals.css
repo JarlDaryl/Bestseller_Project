@@ -1,32 +1,254 @@
-.login-display{
-background-color: rgb(174, 218, 218);
-border-radius: 10px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 50px;
-gap: 20px;
+:root {
+    --max-width: 1100px;
+    --border-radius: 12px;
+    --font-family: "Adelle Sans", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --media-background: var(--color-off-white);
+    --color-text: #222221;
+    --color-white: #ffffff;
+    --color-nutmeg: #7E412D;
+    --color-black: #222221;
+    --color-dark-grey: #707174;
+    --color-mid-grey: #B0B0AE;
+    --color-light-grey: #DAD9D6;
+    --color-off-white: #F6F6F3;
+    --color-white: #ffffff;
+    --color-white-20: rgba(255, 255, 255, 0.2);
+    --color-khaki-twist: #67635C;
+    --color-shara-100: #9D885A;
+    --color-shara-80: #B0A07A;
+    --color-shara-60: #C4B89C;
+    --color-shara-40: #D7D0BC;
+    --color-shara-20: #EBE7DE;
+    --color-green-100: #394C35;
+    --color-green-80: #4B6046;
+    --color-green-60: #7B9576;
+    --color-green-40: #BAC9B3;
+    --color-green-20: #DFE7DB;
+    --color-rust-100: #7E412D;
+    --color-rust-80: #B15537;
+    --color-rust-60: #D98265;
+    --color-rust-40: #E6B5A5;
+    --color-rust-20: #F0DBD4;
+    --color-blue-100: #273344;
+    --color-blue-80: #485564;
+    --color-blue-60: #798896;
+    --color-blue-40: #B1C0CA;
+    --color-blue-20: #DCE5EB;
+    --color-text: var(--color-black);
+    --color-link: var(--color-blue-60);
+    --font-size-small: 0.8rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.2rem;
+    --font-size-xlarge: 1.6rem;
 }
 
-.register-button{
-    color: white;
-    text-decoration-line: none;
+html,
+body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 1rem;
+    line-height: 1.5;
+    scroll-behavior: smooth;
+    min-height: 100%;
 }
 
-li{
+a {
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+li {
     list-style: none;
 }
 
-img{
+img {
     width: 170px;
     height: 200px;
-    border-radius: 30%;
 }
 
-ul{
+/*------------------HOMEPAGE*/
+.homepage-h1 {
+    color: var(--color-text);
+    font-size: var(--font-size-xlarge);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-bottom: 20px;
+    padding: 20px 10px;
+}
+
+/*------------------LOGIN PAGE*/
+/*User Login Component*/
+.login-display {
+    background-color: var(--color-green-20);
     display: flex;
+    flex-direction: column;
+    padding: 50px;
     gap: 20px;
-    justify-content: space-around;
+
+    .login-h2 {
+        color: var(--color-text);
+        font-size: var(--font-size-large);
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .login-title {
+        font-size: var(--font-size-medium);
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .login-input {
+        padding: 4px;
+        border: 0.5px solid var(--color-text);
+        width: 340px;
+        font-size: var(--font-size-small);
+    }
+
+    .login-button {
+        background-color: var(--color-white);
+        border: 0.5px solid var(--color-text);
+        color: var(---color-text);
+        padding: 7px 7px;
+        width: 350px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: var(--font-size-medium);
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .login-forgot-password-link {
+        font-size: var(--font-size-medium);
+        text-decoration: none;
+        color: var(--color-text);
+    }
+}
+
+/*------------------USER REGISTER PAGE*/
+.register-page-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
+
+/*User Register Component*/
+.register-display {
+    background-color: var(--color-green-20);
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+
+    .register-h2 {
+        color: var(--color-text);
+        font-size: var(--font-size-large);
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .register-title {
+        font-size: var(--font-size-medium);
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .register-input {
+        padding: 4px;
+        border: 0.5px solid var(--color-text);
+        width: 340px;
+        font-size: var(--font-size-small);
+    }
+
+    .register-button {
+        background-color: var(--color-white);
+        border: 0.5px solid var(--color-text);
+        color: var(---color-text);
+        padding: 7px 7px;
+        width: 350px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: var(--font-size-medium);
+        cursor: pointer;
+        text-align: center;
+    }
+}
+
+/*------------------DASHBOARD PAGE*/
+user-dashboard-h1 {
+    color: var(--color-text);
+    font-size: var(--font-size-xlarge);
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-bottom: 20px;
+    padding: 20px 10px;
+
+}
+
+/*Email Reset Password Component*/
+.email-reset-password-container {
+    background-color: var(--color-green-20);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .email-reset-password-h2 {
+        color: var(--color-text);
+        font-size: var(--font-size-large);
+        text-transform: uppercase;
+        font-weight: bold;
+        padding-right: 120px;
+    }
+
+    .email-reset-password-info-text {
+        font-size: var(--font-size-medium);
+        color: var(--color-text);
+        /* font-weight: bold; */
+        width: 350px;
+    }
+
+    .email-reset-password-title {
+        font-size: var(--font-size-medium);
+        color: var(--color-text);
+        font-weight: bold;
+    }
+
+    .email-reset-password-input {
+        padding: 4px;
+        border: 0.5px solid var(--color-text);
+        width: 340px;
+        font-size: var(--font-size-small);
+    }
+
+    .reset-password-email-button {
+        background-color: var(--color-white);
+        border: 0.5px solid var(--color-text);
+        color: var(---color-text);
+        padding: 7px 7px;
+        width: 350px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: var(--font-size-medium);
+        cursor: pointer;
+        text-align: center;
+        margin-top: 15px;
+    }
+}
+
+/*------------------DASHBOARD PAGE*/
+.user-dashboard-h1 {
+    color: var(--color-text);
+    font-size: var(--font-size-xlarge);
+    font-weight: bold;
+}
+/*Total Current User Component*/
+
+/*Order Component*/

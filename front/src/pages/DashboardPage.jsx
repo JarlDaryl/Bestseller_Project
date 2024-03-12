@@ -5,7 +5,7 @@ import TotalCurrentUserOrdersComponent from '@/component/Order/TotalCurrentUserO
 export default function UserDashboardPage() {
   return (
     <div>
-      <h1>Current User Orders</h1>
+      <h1 className='user-dashboard-h1'>Your current orders</h1>
       <TotalCurrentUserOrdersComponent />
     </div>
   )
