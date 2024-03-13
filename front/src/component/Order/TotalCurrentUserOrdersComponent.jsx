@@ -48,7 +48,6 @@ export default function TotalCurrentUserOrdersComponent() {
    
   return (
     <div>
-        <h2>Orders for user {userId}</h2>
         {orders && orders.map((order) => {
           return (
             <OrderComponent order={order} />

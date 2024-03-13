@@ -12,9 +12,9 @@ function Item(props) {
     <Box
       sx={{
         bgcolor: (theme) =>
-          theme.palette.mode === 'dark' ? '#101010' : '#fff',
+          theme.palette.mode === 'dark' ? '#EBE7DE' : '#EBE7DE',
         color: (theme) =>
-          theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+          theme.palette.mode === 'dark' ? '#EBE7DE' : '#EBE7DE',
         p: 1,
         m: 1,
         fontSize: '0.875rem',
@@ -28,10 +28,10 @@ function Item(props) {
 
 export default function OrderComponent({ order }) {
   return (
-    <div>
-      <Item status={order.status}>
-        <Accordion>
-          <AccordionSummary
+    <div >
+      <Item status={order.status} >
+        <Accordion >
+          <AccordionSummary 
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1-content"
             id="panel1-header"

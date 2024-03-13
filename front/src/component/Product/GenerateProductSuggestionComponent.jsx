@@ -21,8 +21,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
             return
         }
-        if(productAddedList.length == 0)
-        {
+        if (productAddedList.length == 0) {
             setTotalPrice(prevTotal => total - productQuantity * productPrice);
             console.log("entra en el if");
         }
@@ -36,7 +35,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     };
 
     useEffect(() => {
-        setTotal(totalPrice)
+        setTotal(totalPrice.toFixed(2))
     }, [totalPrice]);
 
     useEffect(() => {
@@ -60,30 +59,33 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     }, [productId]);
 
     return (
-        <div>
+        <div className='generate-products-suggestion-container'>
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {!loading && !error && (
                 <>
-                    <h2>You may also like</h2>
-                    {suggestions.map((suggestion, index) => (
-                        <div key={index}>
-                            <li><img src={suggestion.img} /></li>
-                            <p>{suggestion.name}</p>
-                            <p>{suggestion.description}</p>
-                            <p>{suggestion.gender}</p>
-                            <p>Price: {suggestion.price}</p>
-                            <input
-                                type="number"
-                                min="1"
-                                value={suggestion.quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
-                            />
-                            <button onClick={() => addToOrder(suggestion._id, quantity)}>Add to Order</button>
-                        </div>
-                    ))}
+                    <h2 className='products-generated-h2'>You may also like</h2>
+                    <div className='products-generated-list'>
+                        {suggestions.map((suggestion, index) => (
+                            <div key={index}>
+                                <ul>
+                                    <li><img src={suggestion.img} /></li>
+                                    <li>{suggestion.name}</li>
+                                    <li>{suggestion.description}</li>
+                                    <li>{suggestion.gender}</li>
+                                    <li>Price: {suggestion.price} €</li>
+                                </ul>
+                                <input className='quantity-input'
+                                    type="number"
+                                    min="1"
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(e.target.value)}
+                                />
+                                <button onClick={() => addToOrder(suggestion._id, quantity)} className='add-to-order-button'>Add to order</button>
+                            </div>
+                       ))}
+                    </div>
                     <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} />
-                    {order.length > 0 && <p>Total Price: {totalPrice.toFixed(2)}</p>}
                 </>
             )}
         </div>
