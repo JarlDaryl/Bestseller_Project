@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 
-export default function GenerateProductSuggestionComponent({ productId, setTotal, total }) {
+export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
     console.log('productId:', productId)
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
@@ -21,13 +21,18 @@ export default function GenerateProductSuggestionComponent({ productId, setTotal
             setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
             return
         }
+        if(productAddedList.length == 0)
+        {
+            setTotalPrice(prevTotal => total - productQuantity * productPrice);
+            console.log("entra en el if");
+        }
         setProductAddedList([...productAddedList, selectedProduct])
 
         const productsToAdd = Array(quantity).fill(selectedProduct);
         setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
-        
+
     };
 
     useEffect(() => {
@@ -71,7 +76,7 @@ export default function GenerateProductSuggestionComponent({ productId, setTotal
                             <input
                                 type="number"
                                 min="1"
-                                value={quantity}
+                                value={suggestion.quantity}
                                 onChange={(e) => setQuantity(e.target.value)}
                             />
                             <button onClick={() => addToOrder(suggestion._id, quantity)}>Add to Order</button>

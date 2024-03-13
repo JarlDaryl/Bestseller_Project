@@ -58,7 +58,7 @@ export default function ProductComponent({order}) {
                                         <li>Price: {product.productId.price}</li>
                                         {/* Add more product details here as needed */}
                                     </ul>
-                                    {!product.productId.viable && <GenerateProductSuggestionComponent productId={product.productId._id} setTotal={setTotal} total={total}/>}
+                                    {!product.productId.viable && <GenerateProductSuggestionComponent productId={product.productId._id} productQuantity={product.productId.quantity} productPrice={product.productId.price} setTotal={setTotal} total={total}/>}
                                 </div>
                             ))}
                         </div>
