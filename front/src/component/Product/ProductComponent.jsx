@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Box, { BoxProps } from '@mui/material/Box';
 import GenerateProductSuggestionComponent from './GenerateProductSuggestionComponent';
@@ -23,8 +22,8 @@ export default function ProductComponent({ order }) {
                 <h2 className='products-h2'>Products in your order</h2>
                 <Box>
                     <div className='products-list'>
-                        {order.products.map((product, index) => (
-                            <div key={index}>
+                        {order.products.map((product) => (
+                            <div key={product.productId._id}>
                                 <ul>
                                     <li><img src={product.productId.img} alt={product.productId.description} /></li>
                                     <li>{product.productId.name}</li>

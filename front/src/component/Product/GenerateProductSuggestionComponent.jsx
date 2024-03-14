@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
+import Suggestion from './Suggestion';
 
 export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
     console.log('productId:', productId)
@@ -67,25 +68,10 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                     <h2 className='products-generated-h2'>You may also like</h2>
                     <div className='products-generated-list'>
                         {suggestions.map((suggestion, index) => (
-                            <div key={index}>
-                                <ul>
-                                    <li><img src={suggestion.img} /></li>
-                                    <li>{suggestion.name}</li>
-                                    <li>{suggestion.description}</li>
-                                    <li>{suggestion.gender}</li>
-                                    <li>Price: {suggestion.price} €</li>
-                                </ul>
-                                <input className='quantity-input'
-                                    type="number"
-                                    min="1"
-                                    value={quantity}
-                                    onChange={(e) => setQuantity(e.target.value)}
-                                />
-                                <button onClick={() => addToOrder(suggestion._id, quantity)} className='add-to-order-button'>Add to order</button>
-                            </div>
-                       ))}
+                            <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder}/>
+                        ))} 
                     </div>
-                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} />
+                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity}/>
                 </>
             )}
         </div>
