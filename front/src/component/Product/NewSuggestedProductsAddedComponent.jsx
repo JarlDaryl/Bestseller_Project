@@ -1,6 +1,7 @@
 import React from 'react'
+import QuantityComponent from './QuantityComponent'
 
-export default function NewSuggestedProductsAddedComponent({ productAddedList, quantity }) {
+export default function NewSuggestedProductsAddedComponent({ productAddedList, setQuantity, quantity, handleQuantityChange}) {
 
     return (
         <>
@@ -14,7 +15,7 @@ export default function NewSuggestedProductsAddedComponent({ productAddedList, q
                                 <li>{orderedProduct.name}</li>
                                 <li>{orderedProduct.description}</li>
                                 <li>{orderedProduct.gender}</li>
-                                <li>Quantity: {quantity}</li>
+                                <li>Quantity:<QuantityComponent quantity={orderedProduct.quantity} /></li>
                             </ul>
                         </div>
                     ))}

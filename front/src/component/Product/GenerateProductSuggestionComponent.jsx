@@ -15,8 +15,12 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
 
     const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
-        const productInOrder = order.find(product => product._id === productId);
+        if (!selectedProduct) {
+            console.error(`Product ${productId} not found`);
+            return;
+        }
 
+        const productInOrder = order.find(product => product._id === productId);
         if (productInOrder) {
             console.log(`Product ${productId} is already in the order`);
             setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
@@ -26,13 +30,14 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             setTotalPrice(prevTotal => total - productQuantity * productPrice);
             console.log("entra en el if");
         }
-        setProductAddedList([...productAddedList, selectedProduct])
+
+        const selectedProductWithQuantity = { ...selectedProduct, quantity };
+        setProductAddedList([...productAddedList, selectedProductWithQuantity])
 
         const productsToAdd = Array(quantity).fill(selectedProduct);
         setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
-
     };
 
     useEffect(() => {
@@ -68,10 +73,10 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                     <h2 className='products-generated-h2'>You may also like</h2>
                     <div className='products-generated-list'>
                         {suggestions.map((suggestion, index) => (
-                            <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder}/>
-                        ))} 
+                            <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder} />
+                        ))}
                     </div>
-                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity}/>
+                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} />
                 </>
             )}
         </div>

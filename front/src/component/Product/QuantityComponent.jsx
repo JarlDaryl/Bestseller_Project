@@ -1,8 +1,16 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function QuantityComponent() {
-  const [quantity, setQuantity] = useState(1);
+export default function QuantityComponent({ quantity: propQuantity, setQuantity: propSetQuantity, productId }) {
+  const [quantity, setQuantity] = useState(propQuantity);
+
+  useEffect(() => {
+    setQuantity(propQuantity);
+  }, [propQuantity]);
+
+  const handleChange = (e) => {
+    setQuantity(e.target.value);
+    propSetQuantity(e.target.value);
+  };
 
   return (
     <div>
@@ -10,8 +18,8 @@ export default function QuantityComponent() {
         type="number"
         min="1"
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
+        onChange={handleChange}
       />
     </div>
-  )
+  );
 }
