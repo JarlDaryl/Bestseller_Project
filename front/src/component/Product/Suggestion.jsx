@@ -22,6 +22,7 @@ export default function Suggestion({ suggestion, addToOrder }) {
                     onClick={() => addToOrder(suggestion._id, quantity)}
                     addToOrderIcon={<ShoppingCartIcon />}
                 />
-            </Stack>        </div>
+            </Stack>       
+         </div>
     );
 };

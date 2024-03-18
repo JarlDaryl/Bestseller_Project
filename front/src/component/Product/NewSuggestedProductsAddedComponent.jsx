@@ -7,7 +7,6 @@ export default function NewSuggestedProductsAddedComponent({ productAddedList, i
     return (
         <>
             <div className='suggested-products-container'>
-                <h2 className='suggested-products-h2'>New products added</h2>
                 {isAddToOrderClicked && <h2 className='suggested-products-h2'>New products added</h2>}
                 <div className='suggested-products-list'>
                     {productAddedList.map((orderedProduct, index) => (

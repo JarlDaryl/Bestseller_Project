@@ -8,49 +8,52 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
-export default function GenerateProductSuggestionComponent({ productId, setTotal, total, order, existingProductIndex }) {
+export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
+    console.log('productId:', productId)
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [newOrder, setNewOrder] = useState(order);
+    const [order, setOrder] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [productAddedList, setProductAddedList] = useState([])
     const [isAddToOrderClicked, setIsAddToOrderClicked] = useState(false);
-    const [productAddedList, setProductAddedList] = useState(order.products);
-    console.log(order)
 
-    const addToOrder = async (productId, quantity) => {
-        const productIndex = productAddedList.findIndex(product => product.productId._id === productId);
-        const product = productAddedList[productIndex];
-        const newProduct = {
-            productId: productId,
-            quantity: quantity
-        };
-        if (productIndex === -1) {
-            productAddedList.push(newProduct);
-        } else {
-            productAddedList[productIndex].quantity += quantity;
+    const addToOrder = (productId, quantity) => {
+        const selectedProduct = suggestions.find(product => product._id === productId);
+        if (!selectedProduct) {
+            console.error(`Product ${productId} not found`);
+            return;
         }
-        const newOrder = {
-            ...order,
-            products: productAddedList,
-            _id: order._id 
-        };
-        setNewOrder(newOrder);
-        setProductAddedList(productAddedList); // Add this line
-        const updatedOrder = await updateOrderInDatabase(newOrder);
-        console.log(updatedOrder);
-        setTotalPrice(updatedOrder.total);
 
+        const productInOrder = order.find(product => product._id === productId);
+        if (productInOrder) {
+            console.log(`Product ${productId} is already in the order`);
+            setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
+            return
+        }
+        if (productAddedList.length == 0) {
+            setTotalPrice(prevTotal => total - productQuantity * productPrice);
+            console.log("entra en el if");
+        }
+
+        const selectedProductWithQuantity = { ...selectedProduct, quantity };
+        setProductAddedList([...productAddedList, selectedProductWithQuantity])
+
+        const productsToAdd = Array(quantity).fill(selectedProduct);
+        setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
+        setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
+        console.log(`Product ${productId} added to order ${quantity} times`);
         setIsAddToOrderClicked(true);
     };
 
     useEffect(() => {
-        if (totalPrice !== undefined) {
-            setTotal(totalPrice.toFixed(2));
-        }
+        setTotal(totalPrice.toFixed(2))
     }, [totalPrice]);
 
+    useEffect(() => {
+        console.log(productAddedList)
+    }, [productAddedList]);
 
     useEffect(() => {
         getSuggestedProductsFromDatabase(productId)
