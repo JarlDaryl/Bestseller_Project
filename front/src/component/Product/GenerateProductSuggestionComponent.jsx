@@ -3,21 +3,23 @@ import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 import Suggestion from './Suggestion';
 import { updateOrderInDatabase } from '@/api/OrdersAPIFetch';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
-export default function GenerateProductSuggestionComponent({ productId, setTotal, total, order, existingProductIndex  }) {
+export default function GenerateProductSuggestionComponent({ productId, setTotal, total, order, existingProductIndex }) {
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [newOrder, setNewOrder] = useState(order);
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [isAddToOrderClicked, setIsAddToOrderClicked] = useState(false);
+    const [productAddedList, setProductAddedList] = useState(order.products);
     console.log(order)
 
-
-    // En GenerateProductSuggestionComponent.js
-
     const addToOrder = async (productId, quantity) => {
-        const productAddedList = order.products;
         const productIndex = productAddedList.findIndex(product => product.productId._id === productId);
         const product = productAddedList[productIndex];
         const newProduct = {
@@ -32,14 +34,16 @@ export default function GenerateProductSuggestionComponent({ productId, setTotal
         const newOrder = {
             ...order,
             products: productAddedList,
-            _id: order._id  // Asegúrate de incluir el _id de la orden
+            _id: order._id 
         };
         setNewOrder(newOrder);
+        setProductAddedList(productAddedList); // Add this line
         const updatedOrder = await updateOrderInDatabase(newOrder);
         console.log(updatedOrder);
         setTotalPrice(updatedOrder.total);
-    };
 
+        setIsAddToOrderClicked(true);
+    };
 
     useEffect(() => {
         if (totalPrice !== undefined) {
@@ -66,8 +70,17 @@ export default function GenerateProductSuggestionComponent({ productId, setTotal
 
     return (
         <div className='generate-products-suggestion-container'>
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
+            {loading && (
+                <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
+            )}
+            {error && (
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Alert variant="filled" severity="error">
+                        Invalid email or password. Please try again</Alert>
+                </Stack>
+            )}
             {!loading && !error && (
                 <>
                     <h2 className='products-generated-h2'>You may also like</h2>
@@ -76,14 +89,9 @@ export default function GenerateProductSuggestionComponent({ productId, setTotal
                             <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder} />
                         ))}
                     </div>
-
+                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} isAddToOrderClicked={isAddToOrderClicked} />
                 </>
             )}
         </div>
     );
 };
-
-
-
-
-                    {/* <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} /> */}

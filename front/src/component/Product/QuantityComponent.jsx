@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-export default function QuantityComponent({ quantity: propQuantity, setQuantity: propSetQuantity, productId }) {
+export default function QuantityComponent({ quantity: propQuantity, setQuantity: propSetQuantity}) {
+  
   const [quantity, setQuantity] = useState(propQuantity);
 
   useEffect(() => {
