@@ -87,16 +87,21 @@ const loadOrdersData = async (req, res) => {
 
 const updateOrder = async (req, res) => {
     try {
-        const orderId = req.params.id;
+        const orderId = req.params.orderId;
         const newOrderData = req.body;
-        const updatedOrder = await updateOrderInDatabase(orderId, newOrderData);
+        const updatedOrder = await ordersModel.findByIdAndUpdate(orderId, newOrderData, { new: true });
+
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
 
         res.status(200).json(updatedOrder);
     } catch (error) {
         console.error('Failed to update order:', error);
-        res.status(500).json({ message: 'Failed to update order' });
+        res.status(500).json({ message: 'Failed to update order. Controller' });
     }
-}
+};
+
 
 module.exports = {
     getOrdersByUser,

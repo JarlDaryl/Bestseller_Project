@@ -32,7 +32,7 @@ export default function ProductComponent({ order }) {
                                     <li>Quantity: {product.productId.quantity}</li>
                                     <li>Price: {product.productId.price} €</li>
                                 </ul>
-                                {!product.productId.viable && <GenerateProductSuggestionComponent productId={product.productId._id} productQuantity={product.productId.quantity} productPrice={product.productId.price} setTotal={setTotal} total={total} />}
+                                {!product.productId.viable && <GenerateProductSuggestionComponent productId={product.productId._id} productQuantity={product.productId.quantity} productPrice={product.productId.price} setTotal={setTotal} total={total} order={order} existingProductIndex={order.products.indexOf(product)} />}
                             </div>
                         ))}
                     </div>

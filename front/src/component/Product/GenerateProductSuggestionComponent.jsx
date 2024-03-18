@@ -2,51 +2,51 @@ import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 import Suggestion from './Suggestion';
+import { updateOrderInDatabase } from '@/api/OrdersAPIFetch';
 
-export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
-    console.log('productId:', productId)
+export default function GenerateProductSuggestionComponent({ productId, setTotal, total, order, existingProductIndex  }) {
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [order, setOrder] = useState([]);
+    const [newOrder, setNewOrder] = useState(order);
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [productAddedList, setProductAddedList] = useState([])
+    console.log(order)
 
-    const addToOrder = (productId, quantity) => {
-        const selectedProduct = suggestions.find(product => product._id === productId);
-        if (!selectedProduct) {
-            console.error(`Product ${productId} not found`);
-            return;
+
+    // En GenerateProductSuggestionComponent.js
+
+    const addToOrder = async (productId, quantity) => {
+        const productAddedList = order.products;
+        const productIndex = productAddedList.findIndex(product => product.productId._id === productId);
+        const product = productAddedList[productIndex];
+        const newProduct = {
+            productId: productId,
+            quantity: quantity
+        };
+        if (productIndex === -1) {
+            productAddedList.push(newProduct);
+        } else {
+            productAddedList[productIndex].quantity += quantity;
         }
-
-        const productInOrder = order.find(product => product._id === productId);
-        if (productInOrder) {
-            console.log(`Product ${productId} is already in the order`);
-            setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
-            return
-        }
-        if (productAddedList.length == 0) {
-            setTotalPrice(prevTotal => total - productQuantity * productPrice);
-            console.log("entra en el if");
-        }
-
-        const selectedProductWithQuantity = { ...selectedProduct, quantity };
-        setProductAddedList([...productAddedList, selectedProductWithQuantity])
-
-        const productsToAdd = Array(quantity).fill(selectedProduct);
-        setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
-        setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
-        console.log(`Product ${productId} added to order ${quantity} times`);
+        const newOrder = {
+            ...order,
+            products: productAddedList,
+            _id: order._id  // Asegúrate de incluir el _id de la orden
+        };
+        setNewOrder(newOrder);
+        const updatedOrder = await updateOrderInDatabase(newOrder);
+        console.log(updatedOrder);
+        setTotalPrice(updatedOrder.total);
     };
 
-    useEffect(() => {
-        setTotal(totalPrice.toFixed(2))
-    }, [totalPrice]);
 
     useEffect(() => {
-        console.log(productAddedList)
-    }, [productAddedList]);
+        if (totalPrice !== undefined) {
+            setTotal(totalPrice.toFixed(2));
+        }
+    }, [totalPrice]);
+
 
     useEffect(() => {
         getSuggestedProductsFromDatabase(productId)
@@ -76,9 +76,14 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                             <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder} />
                         ))}
                     </div>
-                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} />
+
                 </>
             )}
         </div>
     );
 };
+
+
+
+
+                    {/* <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} /> */}

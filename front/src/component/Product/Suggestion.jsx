@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import QuantityComponent from './QuantityComponent';
 
 export default function Suggestion({ suggestion, addToOrder }) {
     const [quantity, setQuantity] = useState(1);
-
     return (
         <div >
             <ul>
