@@ -63,9 +63,11 @@ li {
     list-style: none;
 }
 
+
 img {
-    width: 100px;
-    height: 170px;
+    width: 208px;
+    height: 312.237px;
+    object-fit: cover;
 }
 
 /*------------------HOMEPAGE*/
@@ -249,7 +251,7 @@ img {
     font-size: var(--font-size-xlarge);
     font-weight: bold;
 }
-Order Component
+
 .order-container{
     background-color: var(--color-green-20);
 }

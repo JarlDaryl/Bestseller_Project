@@ -2,12 +2,12 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { getUserOrdersFromDatabase } from '@/api/OrdersAPIFetch';
 import OrderComponent from './OrderComponent';
-import { useRouter } from 'next/router';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function TotalCurrentUserOrdersComponent() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
      let userId;
 
      useEffect(() => {
@@ -36,14 +36,16 @@ export default function TotalCurrentUserOrdersComponent() {
             setLoading(false);
           } catch (error) {
             console.error("Error fetching orders:", error);
-            setLoading(false);
+            setLoading(true);
           }
         };
         getAllOrdersByUserAux();
       }, [userId]);
 
-      if (loading) {
-        return <div>Loading...</div>;
+      if (loading ) {
+        return <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+    </Box>;
    }
    
   return (

@@ -73,17 +73,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
 
     return (
         <div className='generate-products-suggestion-container'>
-            {loading && (
-                <Box sx={{ display: 'flex' }}>
-                    <CircularProgress />
-                </Box>
-            )}
-            {error && (
-                <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert variant="filled" severity="error">
-                        Invalid email or password. Please try again</Alert>
-                </Stack>
-            )}
+            
             {!loading && !error && (
                 <>
                     <h2 className='products-generated-h2'>You may also like</h2>
