@@ -23,7 +23,7 @@ export default function Suggestion({ suggestion, addToOrder }) {
 	};
 
 	return (
-		<div>
+		<div className='suggestions'>
 			<ul>
 				<li>
 					<img src={suggestion.img} />

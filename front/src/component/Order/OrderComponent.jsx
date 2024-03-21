@@ -4,6 +4,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box, { BoxProps } from '@mui/material/Box';
+import ConfirmOrderComponent from './ConfirmOrderComponent';
 
 function Item(props) {
   const { sx, ...other } = props;
@@ -26,7 +27,7 @@ function Item(props) {
   );
 }
 
-export default function OrderComponent({ order }) {
+export default function OrderComponent({ order, isAddToOrderClicked }) {
   return (
     <div >
       <Item status={order.status} >
@@ -43,6 +44,7 @@ export default function OrderComponent({ order }) {
             </ul>
           </AccordionSummary>
           <ProductComponent key={order.id} order={order} />
+                  <ConfirmOrderComponent isAddToOrderClicked={isAddToOrderClicked}/>
         </Accordion>
       </Item>
     </div>

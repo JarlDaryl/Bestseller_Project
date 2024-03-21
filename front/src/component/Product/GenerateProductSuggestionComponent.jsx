@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 import Suggestion from './Suggestion';
-import { updateOrderInDatabase } from '@/api/OrdersAPIFetch';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+
 
 export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
     console.log('productId:', productId)
