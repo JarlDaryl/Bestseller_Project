@@ -12,9 +12,9 @@ function Item(props) {
     <Box
       sx={{
         bgcolor: (theme) =>
-          theme.palette.mode === 'dark' ? '#EBE7DE' : '#EBE7DE',
+          theme.palette.mode === 'dark' ? '#EBE7DB' : '#EBE7DB',
         color: (theme) =>
-          theme.palette.mode === 'dark' ? '#EBE7DE' : '#EBE7DE',
+          theme.palette.mode === 'dark' ? '#EBE7DB' : '#EBE7DB',
         p: 1,
         m: 1,
         fontSize: '0.875rem',

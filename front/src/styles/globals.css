@@ -12,7 +12,7 @@
     --color-light-grey: #DAD9D6;
     --color-off-white: #F6F6F3;
     --color-white: #ffffff;
-    --color-white-20: rgba(255, 255, 255, 0.2);
+    --color-white-20: #ffffff33;
     --color-khaki-twist: #67635C;
     --color-shara-100: #9D885A;
     --color-shara-80: #B0A07A;
@@ -261,7 +261,6 @@ img {
     .products-h2 {
         color: var(--color-text);
         font-size: var(--font-size-large);
-        padding-bottom: 20px;
         padding: 20px 10px;
 
     }
@@ -272,13 +271,14 @@ img {
     }
 
     .total-price {
-        color: var(--color-text);
-        font-size: var(--font-size-medium);
-        padding-bottom: 20px;
-        padding: 20px 40px;
-
+        background: var(--color-green-20);
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 50px;
+        font-size: var(--font-size-large);
     }
 }
+
 
 /*Generate Product Suggestion Component*/
 .generate-products-suggestion-container {

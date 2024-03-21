@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import { ImageListItemBar } from '@mui/material';
 export default function Suggestion({ suggestion, addToOrder }) {
 	const [quantity, setQuantity] = useState(1);
 	const [open, setOpen] = useState(false);
@@ -33,12 +33,13 @@ export default function Suggestion({ suggestion, addToOrder }) {
 				<li>{suggestion.gender}</li>
 				<li>Price: {suggestion.price} €</li>
 			</ul>
-			<QuantityComponent quantity={quantity} setQuantity={setQuantity} />
-			<Stack direction='row' spacing={1}>
+			<Stack direction='row' spacing={1} paddingTop={2}>
+				<QuantityComponent quantity={quantity} setQuantity={setQuantity} />
 				<Chip
 					label='Add to order'
 					onClick={handleClick}
-					icon={<ShoppingCartIcon />}
+					icon={<ShoppingCartIcon sx={{ color: 'black', fontSize: 20 }} />}
+					style={{ backgroundColor: '#DFE7DB', color: 'black', paddingTop: 12, paddingBottom: 12, paddingLeft: 10, paddingRight: 10 }}
 				/>
 			</Stack>
 			<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>

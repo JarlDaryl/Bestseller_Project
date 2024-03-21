@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Box, { BoxProps } from '@mui/material/Box';
 import GenerateProductSuggestionComponent from './GenerateProductSuggestionComponent';
-
+import AccordionDetails from '@mui/material/AccordionDetails';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import Alert from '@mui/material/Alert';
+import { Stack } from '@mui/material';
 
 export default function ProductComponent({ order }) {
 	const [total, setTotal] = useState(0);
@@ -25,16 +23,16 @@ export default function ProductComponent({ order }) {
 	}, [order]);
 
 	return (
-		<div>
+		<div className='products-container'>
 			<AccordionDetails>
 				<ImageList sx={{ width: 'auto', height: 'auto' }}>
-					<ImageListItem key='Subheader' cols={2} style={{ height: 'auto' }}>
+					<ImageListItem key='Subheader' cols={2} style={{ height: 'auto', marginLeft: 25 }}>
 						<h2 className='products-h2'>Products in your order</h2>
 					</ImageListItem>
-					{order.products.map((product) => (
-						<div key={product.productId._id}>
-							<ul>
-								<ImageListItem key={product.productId._id}>
+					<Stack direction='row'>
+						{order.products.map((product) => (
+							<div key={product.productId._id}>
+								<ImageListItem key={product.productId._id} style={{ marginLeft: 5, marginRight: 5 }}>
 									<div
 										style={{
 											position: 'relative',
@@ -53,11 +51,11 @@ export default function ProductComponent({ order }) {
 										/>
 										<ImageListItemBar
 											title={product.productId.name}
-											subtitle={product.productId.description}
+											subtitle={product.productId.gender}
 											style={{
 												background: product.productId.viable
-													? 'rgba(128, 128, 128, 0.6)'
-													: 'rgba(255, 0, 0, 0.6)',
+													? 'rgb(215,208,188, 0.91)'
+													: 'rgba(255, 0, 0, 0.8)',
 												position: 'absolute',
 												bottom: 0,
 												width: '100%',
@@ -95,30 +93,31 @@ export default function ProductComponent({ order }) {
 										)}
 									</div>
 								</ImageListItem>
-								<li>{product.productId.name}</li>
-								<li>{product.productId.description}</li>
-								<li>{product.productId.gender}</li>
-								<li>Quantity: {product.productId.quantity}</li>
-								<li>Price: {product.productId.price} €</li>
-							</ul>
-							<div>
-								{!product.productId.viable && (
-									<GenerateProductSuggestionComponent
-										productId={product.productId._id}
-										productQuantity={product.productId.quantity}
-										productPrice={product.productId.price}
-										setTotal={setTotal}
-										total={total}
-										order={order}
-										existingProductIndex={order.products.indexOf(product)}
-									/>
-								)}
+								<ImageListItem style={{ marginLeft: 10 }}>
+									<li>{product.productId.description}</li>
+									<li>Quantity: {product.productId.quantity}</li>
+									<li>Price: {product.productId.price} €</li>
+								</ImageListItem>
+
+								<div>
+									{!product.productId.viable && (
+										<GenerateProductSuggestionComponent
+											productId={product.productId._id}
+											productQuantity={product.productId.quantity}
+											productPrice={product.productId.price}
+											setTotal={setTotal}
+											total={total}
+											order={order}
+											existingProductIndex={order.products.indexOf(product)}
+										/>
+									)}
+								</div>
 							</div>
-						</div>
-					))}
+						))}
+					</Stack>
 				</ImageList>
 			</AccordionDetails>
-			<div className='total-price'>Total: {total} €</div>
+			<div className='total-price' >Total: {total} €</div>
 		</div>
 	);
 

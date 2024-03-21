@@ -67,26 +67,6 @@ const loadData = async (req, res) => {
     }
 };
 
-
-// const suggestProductChanges = async (req, res) => {
-//     try {
-//         const { productId, changes } = req.body;
-//         const product = await productModel.findById(productId);
-
-//         if (!product) {
-//             return res.status(404).json({ status: "failed", data: null, error: "Product not found" });
-//         }
-
-//         // Apply the suggested changes to the product
-//         Object.assign(product, changes);
-//         await product.save();
-
-//         res.status(200).json({ status: "succeeded", data: product, error: null });
-//     } catch (error) {
-//         res.status(500).json({ status: "failed", data: null, error: error.message });
-//     }
-// };
-
 const suggestProductChanges = async (req, res) => {
     try {
         const { productId } = req.params;

@@ -29,8 +29,9 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
     try {
-        const id = req.params.id
-        const user = await userModel.findById(id)
+        const { userId } = req.params.id
+        console.log('userId en BACK:', userId)
+        const user = await userModel.findById(userId)
         console.log(user)
         res.status(200).json({
             status: 'succeeded',
@@ -55,24 +56,24 @@ const loadData = async (req, res) => {
                 companyName: user.companyName,
                 country: user.country,
             })
-           
+
         }));
 
         try {
-             await newUser.save()
+            await newUser.save()
         } catch (error) {
             if (error.code === 11000) {
-            return res
-                .status(409)
-                .json({ status: "failed", data: null, error: "The email already exists" });
-        }
+                return res
+                    .status(409)
+                    .json({ status: "failed", data: null, error: "The email already exists" });
+            }
         }
 
 
         res.send("Data loaded successfully")
     } catch (error) {
         console.log(error)
-        
+
         res.status(500).json({
             status: "error",
             data: null,
@@ -82,8 +83,29 @@ const loadData = async (req, res) => {
 }
 
 
+const changeEmail = async (req, res) => {
+    const { newEmail, userId } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.email = newEmail;
+        await user.save();
+
+        res.status(200).json({ message: 'Email updated successfully' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Failed to change email' });
+    }
+};
+
+
 module.exports = {
     getUsers,
     getUserById,
     loadData,
+    changeEmail,
 }

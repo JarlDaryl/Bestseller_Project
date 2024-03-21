@@ -3,8 +3,9 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Link from 'next/link'
 
-export default function BasicMenu() {
+export default function ProfileMenuComponent() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -15,7 +16,7 @@ export default function BasicMenu() {
   };
 
   return (
-    <div className='user-dashboard-icon-container'>
+    <div className='user-dashboard-icon-container' style={{ textAlign: 'right' }}>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -23,7 +24,7 @@ export default function BasicMenu() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <AccountCircleIcon className='user-dashboard-icon'/>
+        <AccountCircleIcon className='user-dashboard-icon'  sx={{ fontSize: 32, color: '#7E412D' }}/>
       </Button>
       <Menu
         id="basic-menu"
@@ -34,8 +35,9 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem> <Link href={{
+          pathname: 'UserProfilePage',
+        }}>Profile</Link></MenuItem>        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
     </div>
   );

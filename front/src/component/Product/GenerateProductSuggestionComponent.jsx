@@ -73,7 +73,6 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
 
     return (
         <div className='generate-products-suggestion-container'>
-            
             {!loading && !error && (
                 <>
                     <h2 className='products-generated-h2'>You may also like</h2>

@@ -1,6 +1,4 @@
 import React from 'react'
-import QuantityComponent from './QuantityComponent'
-import Link from 'next/link';
 
 export default function NewSuggestedProductsAddedComponent({ productAddedList, isAddToOrderClicked }) {
 
@@ -19,13 +17,7 @@ export default function NewSuggestedProductsAddedComponent({ productAddedList, i
                                 <li>Quantity: {orderedProduct.quantity}</li>
                             </ul>
                         </div>
-                    ))}
-                    {isAddToOrderClicked &&
-                        <button>
-                            <Link href={{
-                                pathname: 'OrderSummaryPage',
-                            }}>Go to Confirmation</Link>
-                        </button>}
+                    ))} 
                 </div>
             </div>
         </>
