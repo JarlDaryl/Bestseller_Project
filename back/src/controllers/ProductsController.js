@@ -78,19 +78,29 @@ const suggestProductChanges = async (req, res) => {
             return;
         }
 
-        const similarProducts = await productModel.find({
-            category: product.category, 
-            gender: product.gender, 
+        const sameColorProducts = await productModel.find({
+            category: product.category,
+            gender: product.gender,
+            color: product.color,
             _id: { $ne: product._id },
             viable: true
-        }).sort({ price: -1}).limit(3);
+        });
+        
+        const otherColorProducts = await productModel.find({
+            category: product.category,
+            gender: product.gender,
+            color: { $ne: product.color },
+            _id: { $ne: product._id },
+            viable: true
+        });
+        
+        const similarProducts = sameColorProducts.concat(otherColorProducts);        
         console.log('similarProducts:', similarProducts)
         res.status(200).json({ status: "succeeded", data: similarProducts, error: null });
     } catch (error) {
         res.status(500).json({ status: "failed", data: null, error: error.message });
     }
 };
-
 
 module.exports = {
     getProducts,
