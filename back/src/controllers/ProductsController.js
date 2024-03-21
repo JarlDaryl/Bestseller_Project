@@ -48,7 +48,7 @@ const loadData = async (req, res) => {
                 quantity: product.quantity,
                 price: product.price,
                 img: product.img,
-                viablie: product.viable,
+                viable: product.viable,
             });
 
             try {

@@ -10,9 +10,9 @@ const find = (id) => {
     }
 }
 
-const newProductModel = (name, description, category, color, size, gender, brand, quantity,  price, img) => {
+const newProductModel = (name, description, category, color, size, gender, brand, quantity,  price, img, viable) => {
     productsDB.push({
-        name, description, category, color, size, gender, brand, quantity, price, img
+        name, description, category, color, size, gender, brand, quantity, price, img, viable
     })
 }
 
