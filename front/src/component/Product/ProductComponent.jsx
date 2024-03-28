@@ -23,7 +23,7 @@ export default function ProductComponent({ order }) {
 	}, [order]);
 
 	return (
-		<div className='products-container'>
+		<div>
 			<AccordionDetails>
 				<ImageList sx={{ width: 'auto', height: 'auto' }}>
 					<ImageListItem key='Subheader' cols={2} style={{ height: 'auto', marginLeft: 25 }}>
@@ -69,7 +69,7 @@ export default function ProductComponent({ order }) {
 															setOpen((prevState) => ({
 																...prevState,
 																[product.productId.name]: true,
-															})); // Abre la alerta para este producto
+															})); // Open the alert for this product
 														}
 													}}
 												>
@@ -86,7 +86,7 @@ export default function ProductComponent({ order }) {
 														...prevState,
 														[product.productId.name]: false,
 													}))
-												} // Cierra la alerta para este producto
+												} // Close the alert for this product
 											>
 												This product is unavailable. Please select another from the suggestions below.
 											</Alert>

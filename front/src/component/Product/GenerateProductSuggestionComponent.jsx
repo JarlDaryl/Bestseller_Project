@@ -68,18 +68,18 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     }, [productId]);
 
     return (
-        <div className='generate-products-suggestion-container'>
+        <>
+            <h2 className='products-generated-h2'>You may also like</h2>
             {!loading && !error && (
-                <>
-                    <h2 className='products-generated-h2'>You may also like</h2>
-                    <div className='products-generated-list'>
+                <div>
+                    <div>
                         {suggestions.map((suggestion, index) => (
                             <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder} />
                         ))}
                     </div>
                     <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} isAddToOrderClicked={isAddToOrderClicked} />
-                </>
+                </div>
             )}
-        </div>
+        </>
     );
 };

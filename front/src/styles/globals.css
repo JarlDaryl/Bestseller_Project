@@ -2,6 +2,7 @@
     --max-width: 1100px;
     --border-radius: 12px;
     --font-family: "Times New Roman", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--color-shara-20);
     --media-background: var(--color-off-white);
     --color-text: #222221;
     --color-white: #ffffff;
@@ -63,7 +64,6 @@ li {
     list-style: none;
 }
 
-
 img {
     width: 208px;
     height: 312.237px;
@@ -83,7 +83,7 @@ img {
 /*------------------LOGIN PAGE*/
 /*User Login Component*/
 .login-display {
-    background-color: var(--color-green-20);
+    background-color: var(--color-shara-40);
     display: flex;
     flex-direction: column;
     padding: 50px;
@@ -139,10 +139,10 @@ img {
 
 /*User Register Component*/
 .register-display {
-    background-color: var(--color-green-20);
+    background-color: var(--color-shara-40);
     display: flex;
     flex-direction: column;
-    padding: 50px;
+    padding: 70px;
     gap: 20px;
     align-items: center;
     justify-content: center;
@@ -182,26 +182,24 @@ img {
     }
 }
 
-/*------------------DASHBOARD PAGE*/
-
-.user-dashboard-h1 {
-    color: var(--color-text);
-    font-size: var(--font-size-xlarge);
-    text-transform: uppercase;
-    font-weight: bold;
-    padding-bottom: 20px;
-    padding: 20px 10px;
-
+/*------------------FORGOT PASSWORD PAGE*/
+.password-assistance-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*Email Reset Password Component*/
 .email-reset-password-container {
-    background-color: var(--color-green-20);
+    background-color: var(--color-shara-40);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    padding-left: 70px;
+    padding-right: 70px;
 
     .email-reset-password-h2 {
         color: var(--color-text);
@@ -249,117 +247,61 @@ img {
 .user-dashboard-h1 {
     color: var(--color-text);
     font-size: var(--font-size-xlarge);
+    text-transform: uppercase;
     font-weight: bold;
+    padding-bottom: 20px;
+    padding: 20px 10px;
 }
 
-.order-container{
-    background-color: var(--color-green-20);
+.order-container {
+    background-color: var(--color-shara-40);
 }
 
-.confirm-order-button{
+.confirm-order-button {
     padding: 7px 7px;
     text-align: center;
 }
 
-/* Update profile component */
-.user-dashboard-icon-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-
-.user-dashboard-icon{
-    width: 50px;
-    height: 50px;
-    color: var(--color-shara-80);}
-
-
-
 /*Products Component*/
-.products-container {
-    .products-h2 {
-        color: var(--color-text);
-        font-size: var(--font-size-large);
-        padding: 20px 10px;
-
-    }
-
-    .products-list {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .total-price {
-        background: var(--color-green-20);
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 50px;
-        font-size: var(--font-size-large);
-    }
+.products-h2 {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    padding: 10px 10px;
+    background-color: var(--color-shara-40);
+    text-align: center;
 }
 
+.total-price {
+    background: var(--color-shara-40);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    font-size: var(--font-size-large);
+}
 
 /*Generate Product Suggestion Component*/
-.suggestions{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+.products-generated-h2 {
+    color: var(--color-text);
+    font-size: var(--font-size-large);
+    padding-top: 40px;
 }
-.generate-products-suggestion-container {
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    padding-bottom: 20px;
 
-    .products-generated-h2 {
-        color: var(--color-text);
-        font-size: var(--font-size-large);
-        padding-top: 40px;
-    }
-
-    .products-generated-list {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .quantity-input {
-        font-size: var(--font-size-small);
-        border: 0.5px solid var(--color-text);
-        padding: 7px;
-        width: 35px;
-        margin-left: 42px;
-    }
-
-    .add-to-order-button {
-        background-color: var( --color-shara-20);
-        border: 0.5px solid var(--color-text);
-        color: var(---color-text);
-        padding: 7px 7px;
-        width: 130px;
-        text-decoration: none;
-        font-size: var(--font-size-small);
-        cursor: pointer;
-        margin-left: 5px;
-        text-align: center;
-    }
+.quantity-input {
+    font-size: var(--font-size-small);
+    border: 0.5px solid var(--color-text);
+    padding: 7px;
+    width: 35px;
+    margin-left: 42px;
 }
 
 /*New Suggested Products Added Component*/
-.suggested-products-container {
+.suggested-products-h2 {
+    color: var(--color-text);
+    font-size: var(--font-size-large);
+    padding-top: 40px;
+}
+
+.suggested-products-list {
     display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    padding-bottom: 20px;
-
-    .suggested-products-h2 {
-        color: var(--color-text);
-        font-size: var(--font-size-large);
-        padding-top: 40px;
-    }
-
-    .suggested-products-list {
-        display: flex;
-        flex-direction: row;
-    }
+    flex-direction: row;
 }

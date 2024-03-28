@@ -32,19 +32,20 @@ export default function OrderComponent({ order, isAddToOrderClicked }) {
     <div >
       <Item status={order.status} >
         <Accordion >
-          <AccordionSummary 
+          <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <ul>Order {order._id}
+            <ul style={{ listStyleType: 'none', paddingLeft: 50, }}>
+              <li>Order {order._id}</li>
               <li>Status: {order.status}</li>
               <li>Created at: {order.createdAt}</li>
               <li>Delivery Date: {order.deliveryDate}</li>
             </ul>
           </AccordionSummary>
           <ProductComponent key={order.id} order={order} />
-                  <ConfirmOrderComponent isAddToOrderClicked={isAddToOrderClicked}/>
+          <ConfirmOrderComponent isAddToOrderClicked={isAddToOrderClicked} />
         </Accordion>
       </Item>
     </div>
