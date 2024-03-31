@@ -2,7 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { getSuggestedProductsFromDatabase } from './../../api/ProductsAPIFetch';
 import NewSuggestedProductsAddedComponent from './NewSuggestedProductsAddedComponent';
 import Suggestion from './Suggestion';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { Grid } from '@mui/material';
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 1000,
+    height: 500,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+};
 
 export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
     console.log('productId:', productId)
@@ -14,6 +30,9 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     const [totalPrice, setTotalPrice] = useState(0);
     const [productAddedList, setProductAddedList] = useState([])
     const [isAddToOrderClicked, setIsAddToOrderClicked] = useState(false);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
@@ -69,15 +88,42 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
 
     return (
         <>
-            <h2 className='products-generated-h2'>You may also like</h2>
             {!loading && !error && (
                 <div>
-                    <div>
-                        {suggestions.map((suggestion, index) => (
-                            <Suggestion key={index} suggestion={suggestion} addToOrder={addToOrder} />
-                        ))}
-                    </div>
-                    <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} isAddToOrderClicked={isAddToOrderClicked} />
+                    <Button
+                        onClick={handleOpen}
+                        className='similar-products-open-button'
+                    >Similar products</Button>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                    >
+                        <Box sx={{ ...style, overflowY: 'auto' }}>
+                            <Typography variant="h6" component="h2"
+                                className='similar-products-header'
+                            >Similar products
+                            </Typography>
+                            <Grid container direction="row" spacing={2}>
+                                {suggestions.map((suggestion, index) => (
+                                    <Grid key={index} item xs={4}>
+                                        <Suggestion
+                                            suggestion={suggestion}
+                                            addToOrder={addToOrder}
+                                            sx={{ fontFamily: 'inherit' }}
+                                        />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                            <br />
+                            <Button
+                                onClick={handleClose}
+                                className='similar-products-close-button'
+                            >Check out your new products added</Button>
+                        </Box>
+                    </Modal>
+                    <Grid container direction="row" spacing={2}>
+                        <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} isAddToOrderClicked={isAddToOrderClicked} />
+                    </Grid>
                 </div>
             )}
         </>

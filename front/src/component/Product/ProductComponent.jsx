@@ -7,7 +7,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import Alert from '@mui/material/Alert';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 export default function ProductComponent({ order }) {
 	const [total, setTotal] = useState(0);
@@ -23,31 +23,23 @@ export default function ProductComponent({ order }) {
 	}, [order]);
 
 	return (
-		<div>
+		<>
 			<AccordionDetails>
 				<ImageList sx={{ width: 'auto', height: 'auto' }}>
 					<ImageListItem key='Subheader' cols={2} style={{ height: 'auto', marginLeft: 25 }}>
-						<h2 className='products-h2'>Products in your order</h2>
+						<h2 className='products-header'>Products in your order</h2>
 					</ImageListItem>
 					<Stack direction='row'>
 						{order.products.map((product) => (
 							<div key={product.productId._id}>
 								<ImageListItem key={product.productId._id} style={{ marginLeft: 5, marginRight: 5 }}>
 									<div
-										style={{
-											position: 'relative',
-											width: '208px',
-											height: '312.237px',
-										}}
-									>
+										className='products-img-container'>
 										<img
 											src={product.productId.img}
 											alt={product.productId.description}
-											style={{
-												width: '100%',
-												height: '100%',
-												objectFit: 'cover',
-											}}
+											className='products-img'
+
 										/>
 										<ImageListItemBar
 											title={product.productId.name}
@@ -62,7 +54,7 @@ export default function ProductComponent({ order }) {
 											}}
 											actionIcon={
 												<IconButton
-													sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+													className='product-info-alert'
 													aria-label={`info about ${product.productId.name}`}
 													onClick={() => {
 														if (!product.productId.viable) {
@@ -79,6 +71,7 @@ export default function ProductComponent({ order }) {
 										/>
 										{open[product.productId.name] && (
 											<Alert
+												className='product-error-alert'
 												variant='filled'
 												severity='error'
 												onClose={() =>
@@ -87,16 +80,15 @@ export default function ProductComponent({ order }) {
 														[product.productId.name]: false,
 													}))
 												} // Close the alert for this product
-											>
-												This product is unavailable. Please select another from the suggestions below.
+											> This product is unavailable. Please select another from the suggestions below.
 											</Alert>
 										)}
 									</div>
 								</ImageListItem>
 								<ImageListItem style={{ marginLeft: 10 }}>
-									<li>{product.productId.description}</li>
-									<li>Quantity: {product.productId.quantity}</li>
-									<li>Price: {product.productId.price} €</li>
+									<Typography variant="h7" sx={{ fontFamily: 'inherit' }}>{product.productId.description}</Typography>
+									<Typography variant="h7" sx={{ fontFamily: 'inherit' }} >Quantity: {product.productId.quantity}</Typography>
+									<Typography variant="h7" sx={{ fontFamily: 'inherit' }} >Price: {product.productId.price} €</Typography>
 								</ImageListItem>
 
 								<div>
@@ -118,7 +110,7 @@ export default function ProductComponent({ order }) {
 				</ImageList>
 			</AccordionDetails>
 			<div className='total-price' >Total: {total} €</div>
-		</div>
+		</>
 	);
 
 }

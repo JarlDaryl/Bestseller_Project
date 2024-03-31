@@ -3,7 +3,7 @@ import ProductComponent from '../Product/ProductComponent';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Box, { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import ConfirmOrderComponent from './ConfirmOrderComponent';
 
 function Item(props) {
@@ -37,11 +37,11 @@ export default function OrderComponent({ order, isAddToOrderClicked }) {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <ul style={{ listStyleType: 'none', paddingLeft: 50, }}>
-              <li>Order {order._id}</li>
-              <li>Status: {order.status}</li>
-              <li>Created at: {order.createdAt}</li>
-              <li>Delivery Date: {order.deliveryDate}</li>
+            <ul className='order-list-container'>
+              <li className='order-list'>Order {order._id}</li>
+              <li className='order-list'>Status: {order.status}</li>
+              <li className='order-list'>Created at: {order.createdAt}</li>
+              <li className='order-list'>Delivery Date: {order.deliveryDate}</li>
             </ul>
           </AccordionSummary>
           <ProductComponent key={order.id} order={order} />

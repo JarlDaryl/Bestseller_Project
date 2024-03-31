@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { ImageListItemBar } from '@mui/material';
+
 export default function Suggestion({ suggestion, addToOrder }) {
 	const [quantity, setQuantity] = useState(1);
 	const [open, setOpen] = useState(false);
@@ -23,13 +23,13 @@ export default function Suggestion({ suggestion, addToOrder }) {
 	};
 
 	return (
-		<div className='suggestions'>
+		<div>
 			<ul>
 				<li>
 					<img src={suggestion.img} />
 				</li>
-				<li>{suggestion.name}</li>
-				<li>{suggestion.description}</li>
+				<li className='suggestion-name'>{suggestion.name}</li>
+				<li className='suggestion-description'>{suggestion.description}</li>
 				<li>{suggestion.gender}</li>
 				<li>Price: {suggestion.price} €</li>
 			</ul>
@@ -38,8 +38,8 @@ export default function Suggestion({ suggestion, addToOrder }) {
 				<Chip
 					label='Add to order'
 					onClick={handleClick}
-					icon={<ShoppingCartIcon sx={{ color: 'black', fontSize: 20 }} />}
-					style={{ backgroundColor: '#DFE7DB', color: 'black', paddingTop: 12, paddingBottom: 12, paddingLeft: 10, paddingRight: 10 }}
+					icon={<ShoppingCartIcon className='shopping-cart-icon' />}
+					className='suggestion-shopping-cart'
 				/>
 			</Stack>
 			<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
@@ -48,8 +48,7 @@ export default function Suggestion({ suggestion, addToOrder }) {
 					severity='success'
 					variant='filled'
 					sx={{ width: '100%' }}
-				>
-					Successfully added product to shopping cart!
+				> Successfully added product to shopping cart!
 				</Alert>
 			</Snackbar>
 		</div>
