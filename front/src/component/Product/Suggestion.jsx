@@ -6,14 +6,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-export default function Suggestion({ suggestion, addToOrder }) {
+export default function Suggestion({ suggestion, addToOrder, setSnackbarOpen }) {
 	const [quantity, setQuantity] = useState(1);
 	const [open, setOpen] = useState(false);
 
 	const handleClick = () => {
-		addToOrder(suggestion._id, quantity);
-		setOpen(true);
-	};
+        addToOrder(suggestion._id, quantity);
+        setSnackbarOpen(true);
+    };
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -23,7 +23,7 @@ export default function Suggestion({ suggestion, addToOrder }) {
 	};
 
 	return (
-		<div>
+		<div className='product-suggestion'>
 			<ul>
 				<li>
 					<img src={suggestion.img} />
@@ -36,21 +36,13 @@ export default function Suggestion({ suggestion, addToOrder }) {
 			<Stack direction='row' spacing={1} paddingTop={2}>
 				<QuantityComponent quantity={quantity} setQuantity={setQuantity} />
 				<Chip
-					label='Add to order'
-					onClick={handleClick}
-					icon={<ShoppingCartIcon className='shopping-cart-icon' />}
-					className='suggestion-shopping-cart'
-				/>
+                label='Add to order'
+                onClick={handleClick}
+                icon={<ShoppingCartIcon className='shopping-cart-icon' />}
+                className='suggestion-shopping-cart'
+            />
 			</Stack>
-			<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-				<Alert
-					onClose={handleClose}
-					severity='success'
-					variant='filled'
-					sx={{ width: '100%' }}
-				> Successfully added product to shopping cart!
-				</Alert>
-			</Snackbar>
+
 		</div>
 	);
 }

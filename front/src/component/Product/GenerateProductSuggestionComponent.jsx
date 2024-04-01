@@ -7,6 +7,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Grid } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
 
 const style = {
     position: 'absolute',
@@ -33,6 +36,14 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
 
     const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
@@ -86,6 +97,9 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             });
     }, [productId]);
 
+
+
+
     return (
         <>
             {!loading && !error && (
@@ -104,15 +118,16 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                             >Similar products
                             </Typography>
                             <Grid container direction="row" spacing={2}>
-                                {suggestions.map((suggestion, index) => (
-                                    <Grid key={index} item xs={4}>
-                                        <Suggestion
-                                            suggestion={suggestion}
-                                            addToOrder={addToOrder}
-                                            sx={{ fontFamily: 'inherit' }}
-                                        />
-                                    </Grid>
-                                ))}
+                            {suggestions.map((suggestion, index) => (
+                            <Grid key={index} item xs={4}>
+                                <Suggestion
+                                    suggestion={suggestion}
+                                    addToOrder={addToOrder}
+                                    setSnackbarOpen={setSnackbarOpen}
+                                    sx={{ fontFamily: 'inherit' }}
+                                />
+                            </Grid>
+                        ))}
                             </Grid>
                             <br />
                             <Button
@@ -121,6 +136,23 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                             >Check out your new products added</Button>
                         </Box>
                     </Modal>
+
+                    <Snackbar 
+                        open={snackbarOpen} 
+                        autoHideDuration={3000} 
+                        onClose={() => setSnackbarOpen(false)}
+                        style={{ position: 'fixed', bottom: 20, left: 20 }}
+                    >
+                        <Alert
+                            onClose={() => setSnackbarOpen(false)}
+                            severity='success'
+                            variant='filled'
+                            sx={{ width: '100%' }}
+                        >
+                            Successfully added product to shopping cart!
+                        </Alert>
+                    </Snackbar>
+
                     <Grid container direction="row" spacing={2}>
                         <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} isAddToOrderClicked={isAddToOrderClicked} />
                     </Grid>
