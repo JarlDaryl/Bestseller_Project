@@ -23,12 +23,14 @@ const style = {
     p: 4,
 };
 
-export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total }) {
+export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total, order}) {
     console.log('productId:', productId)
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [order, setOrder] = useState([]);
+    // const [order, setOrder] = useState([]);
+    const [newOrder, setNewOrder] = useState();
+
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
     const [productAddedList, setProductAddedList] = useState([])
@@ -36,6 +38,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const handleSnackbarClose = (event, reason) => {
@@ -52,7 +55,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             return;
         }
 
-        const productInOrder = order.find(product => product._id === productId);
+        const productInOrder = order.products.find(product => product._id === productId);
         if (productInOrder) {
             console.log(`Product ${productId} is already in the order`);
             setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
@@ -67,7 +70,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
         setProductAddedList([...productAddedList, selectedProductWithQuantity])
 
         const productsToAdd = Array(quantity).fill(selectedProduct);
-        setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
+        // setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
         setIsAddToOrderClicked(true);
@@ -97,7 +100,32 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             });
     }, [productId]);
 
+    console.log('order:', order)
 
+    const handleAccept = () => {
+        // Extraer los detalles del producto de la propiedad productId en la orden original
+        const originalProducts = order.products.map(product => product.productId);
+    
+        // Añadir los productos sugeridos a los productos originales
+        const allProducts = [...originalProducts, ...productAddedList];
+    
+        // Filtrar los productos viables
+        const viableProducts = allProducts.filter(product => product.viable);
+    
+        // Crear la nueva orden con los productos viables
+        const updatedOrder = { 
+            ...order, 
+            products: viableProducts.map(product => ({ productId: product }))
+        };
+    
+        // Imprimir la nueva orden en la consola
+        console.log('Orden actualizada:', updatedOrder);
+        
+        // Aquí puedes realizar cualquier acción adicional con la nueva orden, como enviarla al servidor, etc.
+    };
+    
+    
+    
 
 
     return (
@@ -134,6 +162,10 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                                 onClick={handleClose}
                                 className='similar-products-close-button'
                             >Check out your new products added</Button>
+                             <Button
+                                onClick={handleAccept}
+                                className='similar-products-close-button'
+                            >Confirm</Button>
                         </Box>
                     </Modal>
 

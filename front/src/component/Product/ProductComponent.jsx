@@ -13,6 +13,8 @@ export default function ProductComponent({ order }) {
 	const [total, setTotal] = useState(0);
 	const [open, setOpen] = useState({});
 
+
+
 	useEffect(() => {
 		let total = 0;
 		order.products.forEach((product) => {
@@ -123,14 +125,15 @@ export default function ProductComponent({ order }) {
 								<div>
 									{!product.productId.viable && (
 										<GenerateProductSuggestionComponent
-											productId={product.productId._id}
-											productQuantity={product.productId.quantity}
-											productPrice={product.productId.price}
-											setTotal={setTotal}
-											total={total}
-											order={order}
-											existingProductIndex={order.products.indexOf(product)}
-										/>
+										productId={product.productId._id}
+										productQuantity={product.productId.quantity}
+										productPrice={product.productId.price}
+										setTotal={setTotal}
+										total={total}
+										order={order} // Asegúrate de pasar la prop order aquí
+										existingProductIndex={order.products.indexOf(product)}
+									/>
+									
 									)}
 								</div>
 							</div>
