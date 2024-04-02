@@ -54,7 +54,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             console.error(`Product ${productId} not found`);
             return;
         }
-
+    
         const productInOrder = order.products.find(product => product._id === productId);
         if (productInOrder) {
             console.log(`Product ${productId} is already in the order`);
@@ -65,12 +65,21 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             setTotalPrice(prevTotal => total - productQuantity * productPrice);
             console.log("entra en el if");
         }
-
-        const selectedProductWithQuantity = { ...selectedProduct, quantity };
-        setProductAddedList([...productAddedList, selectedProductWithQuantity])
-
+    
+        const existingProductInAddedList = productAddedList.find(product => product._id === productId);
+        if (existingProductInAddedList) {
+            // Update the quantity of the existing product in the list
+            const updatedProductAddedList = productAddedList.map(product => 
+                product._id === productId ? { ...product, quantity: Number(product.quantity) + Number(quantity) } : product
+            );
+            setProductAddedList(updatedProductAddedList);
+        } else {
+            // Add the new product to the list
+            const selectedProductWithQuantity = { ...selectedProduct, quantity };
+            setProductAddedList([...productAddedList, selectedProductWithQuantity]);
+        }
+    
         const productsToAdd = Array(quantity).fill(selectedProduct);
-        // setOrder(prevOrder => [...prevOrder, ...productsToAdd]);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
         setIsAddToOrderClicked(true);
@@ -106,8 +115,13 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
         // Extraer los detalles del producto de la propiedad productId en la orden original
         const originalProducts = order.products.map(product => product.productId);
     
+        // Filtrar los productos sugeridos que no están ya en los productos originales
+        const newProducts = productAddedList.filter(product => 
+            !originalProducts.some(originalProduct => originalProduct._id === product._id)
+        );
+    
         // Añadir los productos sugeridos a los productos originales
-        const allProducts = [...originalProducts, ...productAddedList];
+        const allProducts = [...originalProducts, ...newProducts];
     
         // Filtrar los productos viables
         const viableProducts = allProducts.filter(product => product.viable);
@@ -115,17 +129,24 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
         // Crear la nueva orden con los productos viables
         const updatedOrder = { 
             ...order, 
-            products: viableProducts.map(product => ({ productId: product }))
+            products: []
         };
+    
+        // Comprobar si el producto ya está en la orden actualizada
+        for (let product of viableProducts) {
+            let productExists = updatedOrder.products.some(orderProduct => orderProduct.productId._id === product._id);
+    
+            // Si el producto no existe en la orden actualizada, añadirlo
+            if (!productExists) {
+                updatedOrder.products.push({ productId: product });
+            }
+        }
     
         // Imprimir la nueva orden en la consola
         console.log('Orden actualizada:', updatedOrder);
-        
+        handleClose();
         // Aquí puedes realizar cualquier acción adicional con la nueva orden, como enviarla al servidor, etc.
     };
-    
-    
-    
 
 
     return (
