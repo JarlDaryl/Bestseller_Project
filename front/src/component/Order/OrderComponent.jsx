@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import ConfirmOrderComponent from './ConfirmOrderComponent';
-import HistoryIcon from '@mui/icons-material/History';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import SyncProblemIcon from '@mui/icons-material/SyncProblem'; // Import SyncProblemIcon
 
 function Item(props) {
@@ -46,10 +46,13 @@ export default function OrderComponent({ order, isAddToOrderClicked }) {
 						<ul className='order-list-container'>
 							<li className='order-list'>
 								{allProductsViable ? (
-									'CONFIRMED'
+									<div className='icon-status'>
+                  <CheckCircleOutlineIcon style={{ marginRight: '10px', color:'#1da01d' }} />
+                  CONFIRMED
+              </div>
 								) : (
 									<div className='icon-status'>
-										<SyncProblemIcon style={{ marginRight: '10px', color:'#ff0000' }} />
+										<SyncProblemIcon style={{ marginRight: '10px', color:'#f12a2a' }} />
 										PENDING
 									</div>
 								)}
