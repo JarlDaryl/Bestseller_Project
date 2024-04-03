@@ -40,6 +40,9 @@ export default function HeaderMenuBarOrdersComponent() {
     if (event.target.innerText === 'Profile') {
       router.push('/UserProfilePage');
     }
+    else if (event.target.innerText === 'Logout') {
+      router.push('/');
+    }
     handleCloseUserMenu();
   };
 
