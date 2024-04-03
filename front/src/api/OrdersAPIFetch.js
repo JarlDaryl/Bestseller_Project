@@ -30,32 +30,40 @@ export const getUserOrdersFromDatabase = async (userId) => {
 };
 
 export const updateOrderInDatabase = async (order) => {
-	try {
-		const user = JSON.parse(window.sessionStorage.getItem("user"));
-		const token = user ? user.data.token : null;
-		const orderId = order ? order._id : undefined;
+    try {
+        const user = JSON.parse(window.sessionStorage.getItem("user"));
+        const token = user ? user.data.token : null;
+        const orderId = order ? order._id : undefined;
 
-		const response = await fetch(
-			`http://localhost:9000/orders/updateOrder/${orderId}`,
-			{
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					"auth-token": token,
-				},
-				body: JSON.stringify(order)
-			}
-		);
+        // Include product quantities in the request body
+        const requestBody = {
+            ...order,
+            products: order.products.map(product => ({
+                ...product,
+                quantity: product.quantity
+            }))
+        };
 
-		if (response.ok) {
-			const updatedOrder = await response.json();
-			return updatedOrder;
-		} else {
-			throw new Error('Failed to update order');
-		}
-	} catch (error) {
-		console.error('Failed to update order:', error);
-		throw error;
-	}
+        const response = await fetch(
+            `http://localhost:9000/orders/updateOrder/${orderId}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "auth-token": token,
+                },
+                body: JSON.stringify(requestBody)
+            }
+        );
 
+        if (response.ok) {
+            const updatedOrder = await response.json();
+            return updatedOrder;
+        } else {
+            throw new Error('Failed to update order');
+        }
+    } catch (error) {
+        console.error('Failed to update order:', error);
+        throw error;
+    }
 };

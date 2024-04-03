@@ -23,9 +23,10 @@ export default function NewSuggestedProductsAddedComponent({ productAddedList, i
                             <ul>
                                 <li><img src={orderedProduct.img} alt={`Product ${orderedProduct._id}`} /></li>
                                 <li className='suggested-product-name'>{orderedProduct.name}</li>
-                                <li >{orderedProduct.description}</li>
-                                <li>{orderedProduct.gender}</li>
+                                <li>{orderedProduct.description}</li>
+                                <li>Gender: {orderedProduct.gender}</li>
                                 <li className='suggested-products-quantity'>Quantity: {orderedProduct.quantity}</li>
+                                <li>Price: {orderedProduct.price} €</li>
                             </ul>
                         </div>
                     ))}
