@@ -45,7 +45,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             console.error(`Product ${productId} not found`);
             return;
         }
-
+    
         const productInOrder = order.products.find(product => product._id === productId);
         if (productInOrder) {
             console.log(`Product ${productId} is already in the order`);
@@ -56,10 +56,20 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             setTotalPrice(prevTotal => total - productQuantity * productPrice);
             console.log("entra en el if");
         }
-
-        const selectedProductWithQuantity = { ...selectedProduct, quantity };
-        setProductAddedList([...productAddedList, selectedProductWithQuantity])
-
+    
+        const existingProductInAddedList = productAddedList.find(product => product._id === productId);
+        if (existingProductInAddedList) {
+            // Update the quantity of the existing product in the list
+            const updatedProductAddedList = productAddedList.map(product => 
+                product._id === productId ? { ...product, quantity: Number(product.quantity) + Number(quantity) } : product
+            );
+            setProductAddedList(updatedProductAddedList);
+        } else {
+            // Add the new product to the list
+            const selectedProductWithQuantity = { ...selectedProduct, quantity };
+            setProductAddedList([...productAddedList, selectedProductWithQuantity]);
+        }
+    
         const productsToAdd = Array(quantity).fill(selectedProduct);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
@@ -70,9 +80,6 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
         setTotal(totalPrice.toFixed(2))
     }, [totalPrice]);
 
-    useEffect(() => {
-        console.log(productAddedList)
-    }, [productAddedList]);
 
     useEffect(() => {
         getSuggestedProductsFromDatabase(productId)
@@ -90,20 +97,35 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             });
     }, [productId]);
 
-    console.log('order:', order)
 
     const handleAccept = () => {
         const originalProducts = order.products.map(product => product.productId);
-        const allProducts = [...originalProducts, ...productAddedList];
+    
+        const newProducts = productAddedList.filter(product => 
+            !originalProducts.some(originalProduct => originalProduct._id === product._id)
+        );
+    
+        const allProducts = [...originalProducts, ...newProducts];
+    
         const viableProducts = allProducts.filter(product => product.viable);
-
-        const updatedOrder = {
-            ...order,
-            products: viableProducts.map(product => ({ productId: product }))
+    
+        const updatedOrder = { 
+            ...order, 
+            products: []
         };
-
+    
+        for (let product of viableProducts) {
+            let productExists = updatedOrder.products.some(orderProduct => orderProduct.productId._id === product._id);
+    
+            if (!productExists) {
+                updatedOrder.products.push({ productId: product });
+            }
+        }
+    
         console.log('Orden actualizada:', updatedOrder);
+        handleClose();
     };
+
 
     return (
         <>
@@ -141,7 +163,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                                     className='cancel-close-button'
                                 ><CancelIcon /></Button>
                                 <Button
-                                    onClick={() => { handleClose(); handleAccept() }}
+                                    onClick={handleAccept}
                                     className='accept-close-button'
                                 > <CheckCircleIcon /></Button>
                             </Box>
