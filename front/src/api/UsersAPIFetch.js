@@ -67,20 +67,18 @@ export const getUserById = async (userId) => {
 }
 
 
-export const changeEmail = async (newEmail) => {
-    try {
-        const response = await fetch('http://localhost:9000/users/changeEmail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ newEmail }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to change email');
-        }
-    } catch (error) {
-        console.error('Error:', error);
+export const changeEmail = async (newEmail, userId) => {
+    const response = await fetch('http://localhost:9000/users/changeEmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ newEmail, userId }), 
+    });
+  
+    if (!response.ok) {
+      throw new Error('Failed to change email');
     }
-};
+  
+    return response.json();
+  };

@@ -11,6 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useRouter } from 'next/router';
+
 
 const pages = [];
 const settings = ['Profile', 'Logout'];
@@ -18,6 +20,8 @@ const settings = ['Profile', 'Logout'];
 export default function HeaderMenuBarOrdersComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const router = useRouter();
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,6 +36,13 @@ export default function HeaderMenuBarOrdersComponent() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleMenuClick = (event) => {
+    if (event.target.innerText === 'Profile') {
+      router.push('/UserProfilePage');
+    }
+    handleCloseUserMenu();
   };
 
   return (
@@ -115,9 +126,9 @@ export default function HeaderMenuBarOrdersComponent() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+        <MenuItem key={setting} onClick={handleMenuClick}>
+          <Typography textAlign="center">{setting}</Typography>
+        </MenuItem>
               ))}
             </Menu>
           </Box>

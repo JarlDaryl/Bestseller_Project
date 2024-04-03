@@ -87,7 +87,7 @@ const changeEmail = async (req, res) => {
     const { newEmail, userId } = req.body;
 
     try {
-        const user = await User.findById(userId);
+        const user = await userModel.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
