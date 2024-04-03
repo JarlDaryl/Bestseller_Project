@@ -30,7 +30,7 @@ export default function ConfirmOrderComponent() {
     if (orderConfirmed) {
       setTimeout(() => {
         window.location.reload(); 
-      }, 1500); 
+      }, 1000); 
     }
   }, [reload]);
 

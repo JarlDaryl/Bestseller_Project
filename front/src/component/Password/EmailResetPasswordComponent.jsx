@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { sendEmail } from '@/api/PasswordAPIFetch';
+import Button from '@mui/material/Button';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import {useRouter} from 'next/router';
 // import Alert from '@material-ui/lab/Alert';
 
 export default function EmailResetPasswordComponent() {
     const [email, setEmail] = useState()
     const [errorMessage, setErrorMessage] = useState(null);
+    const router = useRouter();
 
     const emailHandler = (e) => {
         setEmail(e.target.value)
@@ -24,6 +28,10 @@ export default function EmailResetPasswordComponent() {
         }
     }
 
+    const handleBackClick = () => {
+        router.push('/'); 
+    };
+
     return (
         <div>
             <div className='email-reset-password-container'>
@@ -42,8 +50,8 @@ export default function EmailResetPasswordComponent() {
                     {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 </div>
                 <p className='email-reset-password-info-text'>Has your email changed?. If you no longer use the email address associated with your Bestseller account, you may contact Customer Service for help restoring access to your account.</p>
-
-            </div>
+                <Button onClick={handleBackClick} startIcon={<ArrowBack />} className='email-reset-password-return-button'>Return</Button>
+            </div> 
         </div>
     )
 

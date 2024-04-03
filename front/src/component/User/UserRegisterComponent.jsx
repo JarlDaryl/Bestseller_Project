@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { createUser } from '@/api/UsersAPIFetch';
 import { useRouter } from 'next/router';
+import Button from '@mui/material/Button';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 
 export default function UserRegisterComponent() {
     const router = useRouter();
@@ -78,6 +80,10 @@ export default function UserRegisterComponent() {
         }
     }
 
+    const handleBackClick = () => {
+        router.push('/'); 
+    };
+
     return (
         <div className='register-display'>
             <h2 className='register-h2'>Create your user</h2>
@@ -116,6 +122,7 @@ export default function UserRegisterComponent() {
                 {errorMessage && <p>{errorMessage}</p>}
                 {successMessage && <h2>{successMessage}</h2>}
             </div>
+            <Button onClick={handleBackClick} startIcon={<ArrowBack />} className='register-return-button'>Return</Button> 
         </div>
     )
 }
