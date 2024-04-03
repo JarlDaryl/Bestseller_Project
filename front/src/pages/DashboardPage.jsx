@@ -8,7 +8,6 @@ export default function DashboardPage() {
       <div><HeaderMenuBarOrdersComponent/></div>
       <h1 className='user-dashboard-h1'>Your current orders</h1>
       <TotalCurrentUserOrdersComponent />
-
     </div>
   )
 }

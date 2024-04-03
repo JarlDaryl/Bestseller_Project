@@ -3,23 +3,14 @@ import QuantityComponent from './QuantityComponent';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 
 export default function Suggestion({ suggestion, addToOrder, setSnackbarOpen }) {
 	const [quantity, setQuantity] = useState(1);
 	const [open, setOpen] = useState(false);
 
 	const handleClick = () => {
-        addToOrder(suggestion._id, quantity);
-        setSnackbarOpen(true);
-    };
-
-	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-		setOpen(false);
+		addToOrder(suggestion._id, quantity);
+		setSnackbarOpen(true);
 	};
 
 	return (
@@ -36,13 +27,12 @@ export default function Suggestion({ suggestion, addToOrder, setSnackbarOpen }) 
 			<Stack direction='row' spacing={1} paddingTop={2}>
 				<QuantityComponent quantity={quantity} setQuantity={setQuantity} />
 				<Chip
-                label='Add to order'
-                onClick={handleClick}
-                icon={<ShoppingCartIcon className='shopping-cart-icon' />}
-                className='suggestion-shopping-cart'
-            />
+					label='Add to order'
+					onClick={handleClick}
+					className='suggestion-shopping-cart'
+					icon={<ShoppingCartIcon className='shopping-cart-icon' />}
+				/>
 			</Stack>
-
 		</div>
 	);
 }

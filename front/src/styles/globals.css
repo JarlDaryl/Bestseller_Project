@@ -20,11 +20,13 @@
     --color-shara-60: #C4B89C;
     --color-shara-40: #D7D0BC;
     --color-shara-20: #EBE7DE;
+    --color-green-120: #008000;
     --color-green-100: #394C35;
     --color-green-80: #4B6046;
     --color-green-60: #7B9576;
     --color-green-40: #BAC9B3;
     --color-green-20: #DFE7DB;
+    --color-red-20: #ff0000;
     --color-rust-100: #7E412D;
     --color-rust-80: #B15537;
     --color-rust-60: #D98265;
@@ -261,6 +263,7 @@ img {
 
     .order-list {
         padding-right: 45px;
+        font-size: var(--font-size-medium);
     }
 }
 
@@ -271,13 +274,43 @@ img {
 
     .confirm-order-button {
         font-size: var(--font-size-medium);
-        font-weight: 600;
-        background-color: var(--color-green-20);
+        color: var(--color-white);
+        font-weight: 500;
+        background-color: var(--color-green-40);
         padding: 10px 35px;
 
         &:hover {
-            background-color: var(--color-shara-40);
+            background-color: var(--color-green-60);
         }
+    }
+}
+
+.order-confirmed-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 50px;
+    padding: 40px;
+    background-color: var(--color-shara-60);
+    display: flex;
+    align-items: flex-start;
+    font-family: inherit;
+    font-style: oblique;
+
+    .order-confirmed-icon {
+        width: 50px;
+        height: 50px;
+        size: 30px;
+        padding-right: 15px;
+        color: var(--color-white);
+    }
+
+    .order-confirmed-text {
+        font-weight: 500;
+        color: var(--color-off-white);
+        font-size: var(--font-size-large);
     }
 }
 
@@ -334,12 +367,12 @@ img {
 }
 
 .similar-products-header {
-    color: var(--color-text);
-    font-weight: bold;
     padding: 10px;
     background-color: var(--color-shara-40);
+    color: var(---color-text);
     text-align: center;
     font-family: inherit;
+    font-weight: bold;
 }
 
 .quantity-input {
@@ -350,14 +383,30 @@ img {
     margin-left: 42px;
 }
 
-.similar-products-close-button {
+.similar-products-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.accept-close-button {
     color: var(--color-white);
-    background-color: var(--color-shara-60);
+    background-color: var(--color-green-60);
 
     &:hover {
-        background-color: var(--color-green-40);
+        background-color: var(--color-green-120);
     }
 }
+
+.cancel-close-button {
+    color: var(--color-white);
+    background-color: var(--color-nutmeg);
+    margin-right: 8px;
+
+    &:hover {
+        background-color: var(--color-red-20);
+    }
+}
+
 
 /*New Suggested Products Added Component*/
 .suggested-products-header {
@@ -370,7 +419,7 @@ img {
     margin-left: 23px;
 }
 
-.product-suggestion{
+.product-suggestion {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -403,13 +452,19 @@ img {
 }
 
 .suggestion-shopping-cart {
-    background-color: var(--color-green-20);
-    color: var(--color-black);
-    padding: 12px 10px;
+    background-color: var(--color-green-60);
+    color: var(--color-white);
+    padding: 13px 13px;
+
+    &:hover {
+        background-color: var(--color-green-80);
+    }
 }
 
 .shopping-cart-icon {
-    color: var(--color-black);
+    color: var(--color-white);
     font-size: var(--font-size-large);
-
+    fill: var(--color-white);
+    height: 50px;
+    width: 20px;
 }

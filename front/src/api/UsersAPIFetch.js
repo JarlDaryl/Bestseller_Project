@@ -31,7 +31,6 @@ export const verifyUser = async (token, email) => {
     }
 }
 
-
 export const createUser = async (bodyParam) => {
     const response = await fetch('http://localhost:9000/login/signup', {
         method: 'POST',
@@ -66,19 +65,18 @@ export const getUserById = async (userId) => {
     }
 }
 
-
 export const changeEmail = async (newEmail, userId) => {
     const response = await fetch('http://localhost:9000/users/changeEmail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ newEmail, userId }), 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newEmail, userId }),
     });
-  
+
     if (!response.ok) {
-      throw new Error('Failed to change email');
+        throw new Error('Failed to change email');
     }
-  
+
     return response.json();
-  };
+};

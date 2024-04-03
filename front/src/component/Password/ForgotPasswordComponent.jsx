@@ -38,7 +38,6 @@ export default function ForgotPasswordComponent() {
     }
   }
 
-
   return (
     <div>
       <h2>Create new password</h2>

@@ -3,7 +3,6 @@ const productModel = require("../models/ProductsModel")
 
 const getProducts = async (req, res) => {
     try {
-
         const allProducts = await productModel.find()
         const resProduct = allProducts.map(product => {
             return {

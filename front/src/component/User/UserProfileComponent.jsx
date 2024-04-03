@@ -4,44 +4,44 @@ import CircularProgress from '@mui/material/CircularProgress';
 import HeaderMenuBarOrdersComponent from '../HeaderMenuBar/HeaderMenuBarOrderComponent';
 import Button from '@mui/material/Button';
 import ArrowBack from '@mui/icons-material/ArrowBack';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 export default function UserProfileComponent() {
 	const [userDetails, setUserDetails] = useState(null);
 	const [newEmail, setNewEmail] = useState('');
-  const router = useRouter();
+	const router = useRouter();
 
 	useEffect(() => {
-    const user = window.sessionStorage.getItem('user');
-    if (user) {
-        const userObj = JSON.parse(user);
-        setUserDetails(userObj.data); 
-    }
-    console.log(user)
+		const user = window.sessionStorage.getItem('user');
+		if (user) {
+			const userObj = JSON.parse(user);
+			setUserDetails(userObj.data);
+		}
+		console.log(user)
 
-}, []);
+	}, []);
 
 	const handleEmailChange = async () => {
-    const user = JSON.parse(window.sessionStorage.getItem('user'));
-    if (user && user.data) { 
-        const userId = user.data.id; 
-        await changeEmail(newEmail, userId);
-    } else {
-        console.error('User not found in session storage');
-    }
-};
+		const user = JSON.parse(window.sessionStorage.getItem('user'));
+		if (user && user.data) {
+			const userId = user.data.id;
+			await changeEmail(newEmail, userId);
+		} else {
+			console.error('User not found in session storage');
+		}
+	};
 
 	if (!userDetails) {
 		return <CircularProgress />;
 	}
 
-  const handleBackClick = () => {
-    router.push('/DashboardPage'); // Redirect to dashboard
-};
+	const handleBackClick = () => {
+		router.push('/DashboardPage');
+	};
 
 	return (
 		<div>
-      <HeaderMenuBarOrdersComponent />
+			<HeaderMenuBarOrdersComponent />
 			<h1>User Profile</h1>
 			<p>
 				{' '}
@@ -63,9 +63,9 @@ export default function UserProfileComponent() {
 				placeholder='Enter new email'
 			/>
 			<button onClick={handleEmailChange}>Change Email</button>
-      <div>
-      <Button onClick={handleBackClick} startIcon={<ArrowBack />}>Dashboard</Button> 
-      </div>
+			<div>
+				<Button onClick={handleBackClick} startIcon={<ArrowBack />}>Dashboard</Button>
+			</div>
 		</div>
 	);
 }

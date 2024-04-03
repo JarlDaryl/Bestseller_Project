@@ -7,7 +7,6 @@ import { Alert } from '@mui/material';
 
 export default function UserLoginComponent() {
 	const router = useRouter();
-
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [errorMessage, setErrorMessage] = useState("");

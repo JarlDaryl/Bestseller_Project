@@ -9,7 +9,6 @@ export default function ForgotPasswordPage() {
             <div className='password-assistance-container'>
                 <EmailResetPasswordComponent />
             </div>
-
         </>
     )
 }

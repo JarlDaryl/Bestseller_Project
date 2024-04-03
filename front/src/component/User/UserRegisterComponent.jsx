@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 export default function UserRegisterComponent() {
     const router = useRouter();
-
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -119,6 +118,5 @@ export default function UserRegisterComponent() {
             </div>
         </div>
     )
-
 }
 

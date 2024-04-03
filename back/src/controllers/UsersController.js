@@ -3,7 +3,6 @@ const userModel = require("../models/UsersModel")
 
 const getUsers = async (req, res) => {
     try {
-
         const allUsers = await userModel.find()
         const resUser = allUsers.map(user => {
             return {
@@ -82,7 +81,6 @@ const loadData = async (req, res) => {
     }
 }
 
-
 const changeEmail = async (req, res) => {
     const { newEmail, userId } = req.body;
 
@@ -101,7 +99,6 @@ const changeEmail = async (req, res) => {
         res.status(500).json({ message: 'Failed to change email' });
     }
 };
-
 
 module.exports = {
     getUsers,

@@ -9,7 +9,8 @@ import Modal from '@mui/material/Modal';
 import { Grid } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const style = {
     position: 'absolute',
@@ -23,14 +24,11 @@ const style = {
     p: 4,
 };
 
-export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total, order}) {
+export default function GenerateProductSuggestionComponent({ productId, productQuantity, productPrice, setTotal, total, order }) {
     console.log('productId:', productId)
     const [suggestions, setSuggestions] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    // const [order, setOrder] = useState([]);
-    const [newOrder, setNewOrder] = useState();
-
     const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(0);
     const [productAddedList, setProductAddedList] = useState([])
@@ -38,15 +36,8 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-
+    const handleCloseCanceledOrder = () => setOpen(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setSnackbarOpen(false);
-    };
 
     const addToOrder = (productId, quantity) => {
         const selectedProduct = suggestions.find(product => product._id === productId);
@@ -54,7 +45,7 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             console.error(`Product ${productId} not found`);
             return;
         }
-    
+
         const productInOrder = order.products.find(product => product._id === productId);
         if (productInOrder) {
             console.log(`Product ${productId} is already in the order`);
@@ -65,20 +56,10 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
             setTotalPrice(prevTotal => total - productQuantity * productPrice);
             console.log("entra en el if");
         }
-    
-        const existingProductInAddedList = productAddedList.find(product => product._id === productId);
-        if (existingProductInAddedList) {
-            // Update the quantity of the existing product in the list
-            const updatedProductAddedList = productAddedList.map(product => 
-                product._id === productId ? { ...product, quantity: Number(product.quantity) + Number(quantity) } : product
-            );
-            setProductAddedList(updatedProductAddedList);
-        } else {
-            // Add the new product to the list
-            const selectedProductWithQuantity = { ...selectedProduct, quantity };
-            setProductAddedList([...productAddedList, selectedProductWithQuantity]);
-        }
-    
+
+        const selectedProductWithQuantity = { ...selectedProduct, quantity };
+        setProductAddedList([...productAddedList, selectedProductWithQuantity])
+
         const productsToAdd = Array(quantity).fill(selectedProduct);
         setTotalPrice(prevTotal => prevTotal + selectedProduct.price * quantity);
         console.log(`Product ${productId} added to order ${quantity} times`);
@@ -112,42 +93,17 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
     console.log('order:', order)
 
     const handleAccept = () => {
-        // Extraer los detalles del producto de la propiedad productId en la orden original
         const originalProducts = order.products.map(product => product.productId);
-    
-        // Filtrar los productos sugeridos que no están ya en los productos originales
-        const newProducts = productAddedList.filter(product => 
-            !originalProducts.some(originalProduct => originalProduct._id === product._id)
-        );
-    
-        // Añadir los productos sugeridos a los productos originales
-        const allProducts = [...originalProducts, ...newProducts];
-    
-        // Filtrar los productos viables
+        const allProducts = [...originalProducts, ...productAddedList];
         const viableProducts = allProducts.filter(product => product.viable);
-    
-        // Crear la nueva orden con los productos viables
-        const updatedOrder = { 
-            ...order, 
-            products: []
-        };
-    
-        // Comprobar si el producto ya está en la orden actualizada
-        for (let product of viableProducts) {
-            let productExists = updatedOrder.products.some(orderProduct => orderProduct.productId._id === product._id);
-    
-            // Si el producto no existe en la orden actualizada, añadirlo
-            if (!productExists) {
-                updatedOrder.products.push({ productId: product });
-            }
-        }
-    
-        // Imprimir la nueva orden en la consola
-        console.log('Orden actualizada:', updatedOrder);
-        handleClose();
-        // Aquí puedes realizar cualquier acción adicional con la nueva orden, como enviarla al servidor, etc.
-    };
 
+        const updatedOrder = {
+            ...order,
+            products: viableProducts.map(product => ({ productId: product }))
+        };
+
+        console.log('Orden actualizada:', updatedOrder);
+    };
 
     return (
         <>
@@ -167,32 +123,33 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                             >Similar products
                             </Typography>
                             <Grid container direction="row" spacing={2}>
-                            {suggestions.map((suggestion, index) => (
-                            <Grid key={index} item xs={4}>
-                                <Suggestion
-                                    suggestion={suggestion}
-                                    addToOrder={addToOrder}
-                                    setSnackbarOpen={setSnackbarOpen}
-                                    sx={{ fontFamily: 'inherit' }}
-                                />
-                            </Grid>
-                        ))}
+                                {suggestions.map((suggestion, index) => (
+                                    <Grid key={index} item xs={4}>
+                                        <Suggestion
+                                            suggestion={suggestion}
+                                            addToOrder={addToOrder}
+                                            setSnackbarOpen={setSnackbarOpen}
+                                            sx={{ fontFamily: 'inherit' }}
+                                        />
+                                    </Grid>
+                                ))}
                             </Grid>
                             <br />
-                            <Button
-                                onClick={handleClose}
-                                className='similar-products-close-button'
-                            >Check out your new products added</Button>
-                             <Button
-                                onClick={handleAccept}
-                                className='similar-products-close-button'
-                            >Confirm</Button>
+                            <Box className='similar-products-buttons-container '>
+                                <Button
+                                    onClick={handleCloseCanceledOrder}
+                                    className='cancel-close-button'
+                                ><CancelIcon /></Button>
+                                <Button
+                                    onClick={() => { handleClose(); handleAccept() }}
+                                    className='accept-close-button'
+                                > <CheckCircleIcon /></Button>
+                            </Box>
                         </Box>
                     </Modal>
-
-                    <Snackbar 
-                        open={snackbarOpen} 
-                        autoHideDuration={3000} 
+                    <Snackbar
+                        open={snackbarOpen}
+                        autoHideDuration={3000}
                         onClose={() => setSnackbarOpen(false)}
                         style={{ position: 'fixed', bottom: 20, left: 20 }}
                     >
@@ -205,7 +162,6 @@ export default function GenerateProductSuggestionComponent({ productId, productQ
                             Successfully added product to shopping cart!
                         </Alert>
                     </Snackbar>
-
                     <Grid container direction="row" spacing={2}>
                         <NewSuggestedProductsAddedComponent productAddedList={productAddedList} quantity={quantity} isAddToOrderClicked={isAddToOrderClicked} />
                     </Grid>

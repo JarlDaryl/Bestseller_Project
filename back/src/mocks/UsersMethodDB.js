@@ -10,7 +10,6 @@ const find = (id) => {
     }
 }
 
-
 const newUserModel = (id, email, password, companyName, country) => {
     donutsDB.push({
         id, email, password, companyName, country

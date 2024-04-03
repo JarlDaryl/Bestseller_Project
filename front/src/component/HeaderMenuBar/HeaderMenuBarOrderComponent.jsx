@@ -13,7 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useRouter } from 'next/router';
 
-
 const pages = [];
 const settings = ['Profile', 'Logout'];
 
@@ -21,7 +20,6 @@ export default function HeaderMenuBarOrdersComponent() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const router = useRouter();
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -65,7 +63,6 @@ export default function HeaderMenuBarOrdersComponent() {
           >
             BESTSELLER
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -126,9 +123,9 @@ export default function HeaderMenuBarOrdersComponent() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-        <MenuItem key={setting} onClick={handleMenuClick}>
-          <Typography textAlign="center">{setting}</Typography>
-        </MenuItem>
+                <MenuItem key={setting} onClick={handleMenuClick}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
               ))}
             </Menu>
           </Box>

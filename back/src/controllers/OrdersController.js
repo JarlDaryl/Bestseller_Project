@@ -25,7 +25,6 @@ const getOrders = async (req, res) => {
     }
 }
 
-
 const getOrdersByUser = async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -41,7 +40,6 @@ const getOrdersByUser = async (req, res) => {
         res.status(500).json({ message: 'Error fetching user orders', error: error.message });
     }
 }
-
 
 const loadOrdersData = async (req, res) => {
     let errors = [];
@@ -101,7 +99,6 @@ const updateOrder = async (req, res) => {
         res.status(500).json({ message: 'Failed to update order. Controller' });
     }
 };
-
 
 module.exports = {
     getOrdersByUser,
