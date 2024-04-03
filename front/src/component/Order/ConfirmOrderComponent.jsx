@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
+import {updateOrderInDatabase} from '../../api/OrdersAPIFetch'
 
 export default function ConfirmOrderComponent() {
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false)
+  
+  const handleOpen = () => {
+    const updatedOrder = JSON.parse(sessionStorage.getItem('updatedOrder'));
+    if (updatedOrder) {
+      updateOrderInDatabase(updatedOrder)
+        .then(() => {
+          setOrderConfirmed(true);
+          setOpen(true);
+        })
+        .catch((error) => console.error('Failed to update order:', error));
+    }
+  };
+
+  const handleClose = () => setOpen(false);
 
   return (
     <div className='confirm-order-button-container'>

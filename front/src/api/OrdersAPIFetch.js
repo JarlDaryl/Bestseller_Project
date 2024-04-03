@@ -59,13 +59,3 @@ export const updateOrderInDatabase = async (order) => {
 	}
 
 };
-
-// .catch((error) => {
-// 	ErrorService.handle(
-// 	  error,
-// 	  Fetch,
-// 	  setEvents,
-// 	  getEventsByMonth,
-// 	  navigate
-// 	);
-//   });
