@@ -271,6 +271,15 @@ img {
     .order-list {
         padding-right: 45px;
         font-size: var(--font-size-medium);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+
+        .icon-status{
+            display: flex;
+            align-items: center;
+        }
     }
 }
 
